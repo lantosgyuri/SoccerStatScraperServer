@@ -21,23 +21,49 @@ const getGamesOfThisWeek = async (page) => {
     const AWAY_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(4) > a';
     const LINK_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(5)';
 
-    // TODO : scrape the games
+    const dataBeScraped = [
+        {   name: 'date',
+            selector: DATE_SELECTOR,
+        },
+        {   name: 'time',
+            selector: TIME_SELECTOR
+        },
+        {   name: 'homeTeam',
+            selector: HOME_TEAM_SELECTOR
+        },
+        {   name: 'awayTeam',
+            selector: AWAY_TEAM_SELECTOR
+        },
+        {   name: 'lintToStats',
+            selector: LINK_SELECTOR
+        }
+        ];
+
     let isTableEnd = false;
-    let counter = 3;
-    do {
-        // the 3. children is the first element
-        let GAME_ROW = GAME_ROW_SELECTOR.replace('INDEX', counter.toString());
+    // the 3. children is the first element
+    let elementIndex = 3;
+    while (!isTableEnd){
+        const GAME_ROW = GAME_ROW_SELECTOR.replace('INDEX', elementIndex.toString());
         const gameRowCount = await page.evaluate(sel => {
             return document.querySelector(sel).childElementCount;
         }, GAME_ROW);
         if (gameRowCount < 4) isTableEnd = true;
         else {
-
-            counter++;
+            let gameDetails = {};
+            for (const item of dataBeScraped) {
+                const scrapedData = await page.evaluate(sel =>
+                    document.querySelector(sel).innerHTML,
+                    item.selector.replace('INDEX', elementIndex.toString()));
+                const key = item.name;
+                gameDetails[key] = scrapedData;
+            }
+            console.log(`scraped object:`, gameDetails);
+            elementIndex++;
         }
-        console.log(`gamerowindex ${counter} gamerowCount ${gameRowCount}`);
-    } while (!isTableEnd)
+        console.log(`gamerowindex ${elementIndex} gamerowCount ${gameRowCount}`);
+    }
 };
+
 
 scrape();
 //HOME TEAM goes with index
