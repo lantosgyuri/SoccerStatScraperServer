@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { removeNewLine } = require('./utils');
 
 const scrape = async () => {
     const browser = await puppeteer.launch();
@@ -62,7 +63,7 @@ const getGamesOfThisWeek = async (page) => {
                             document.querySelector(sel).innerHTML,
                         item.selector.replace('INDEX', elementIndex.toString()));
                 }
-                gameDetails[key] = scrapedData;
+                gameDetails[key] = removeNewLine(scrapedData);
             }
             console.log(`scraped object:`, gameDetails);
             elementIndex++;
