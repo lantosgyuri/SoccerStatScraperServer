@@ -18,8 +18,8 @@ const getGamesOfThisWeek = async (page) => {
     const DATE_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(1) > font';
     const TIME_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(2) > font';
     const HOME_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(3)';
-    const AWAY_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(4) > a';
-    const LINK_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(5)';
+    const AWAY_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(5)';
+    const LINK_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(4) > a';
 
     const dataBeScraped = [
         {   name: 'date',
@@ -34,7 +34,7 @@ const getGamesOfThisWeek = async (page) => {
         {   name: 'awayTeam',
             selector: AWAY_TEAM_SELECTOR
         },
-        {   name: 'lintToStats',
+        {   name: 'linkToStats',
             selector: LINK_SELECTOR
         }
         ];
@@ -51,10 +51,17 @@ const getGamesOfThisWeek = async (page) => {
         else {
             let gameDetails = {};
             for (const item of dataBeScraped) {
-                const scrapedData = await page.evaluate(sel =>
-                    document.querySelector(sel).innerHTML,
-                    item.selector.replace('INDEX', elementIndex.toString()));
                 const key = item.name;
+                let scrapedData;
+                if (key === 'linkToStats') {
+                    scrapedData = await page.evaluate(sel =>
+                            document.querySelector(sel).getAttribute('href'),
+                        item.selector.replace('INDEX', elementIndex.toString()));
+                } else {
+                    scrapedData = await page.evaluate(sel =>
+                            document.querySelector(sel).innerHTML,
+                        item.selector.replace('INDEX', elementIndex.toString()));
+                }
                 gameDetails[key] = scrapedData;
             }
             console.log(`scraped object:`, gameDetails);
