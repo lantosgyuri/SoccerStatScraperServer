@@ -1,4 +1,4 @@
-const { removeNewLine, createFullLink } = require('./utils');
+const { filterRows } = require('./utils');
 
 const getLeagues = async (page) => {
     const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
@@ -35,67 +35,46 @@ const getLeagues = async (page) => {
     return leagueDetailsList;
 };
 
-const getGamesOfThisWeek = async (page) => {
-    const GAME_ROW_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX)';
-    const DATE_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(1) > font';
-    const TIME_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(2) > font';
-    const HOME_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(3)';
-    const AWAY_TEAM_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(5)';
-    const LINK_SELECTOR = '#content > div:nth-child(5) > div > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr > td > table > tbody > tr:nth-child(INDEX) > td:nth-child(4) > a';
-
-    const dataBeScraped = [
-        {   name: 'date',
-            selector: DATE_SELECTOR,
-        },
-        {   name: 'time',
-            selector: TIME_SELECTOR
-        },
-        {   name: 'homeTeam',
-            selector: HOME_TEAM_SELECTOR
-        },
-        {   name: 'awayTeam',
-            selector: AWAY_TEAM_SELECTOR
-        },
-        {   name: 'linkToStats',
-            selector: LINK_SELECTOR
-        }
-    ];
-
-    let isTableEnd = false;
-    // the 3. children is the first element
-    let elementIndex = 3;
-    const gameDetailsList = [];
-    while (!isTableEnd){
-        const GAME_ROW = GAME_ROW_SELECTOR.replace('INDEX', elementIndex.toString());
-        const gameRowCount = await page.evaluate(sel => {
-            return document.querySelector(sel).childElementCount;
-        }, GAME_ROW);
-        if (gameRowCount < 4) isTableEnd = true;
-        else {
-            let gameDetails = {};
-            for (const item of dataBeScraped) {
-                const key = item.name;
-                let scrapedData;
-                if (key === 'linkToStats') {
-                    const rowScrapedLink = await page.evaluate(sel =>
-                            document.querySelector(sel).getAttribute('href'),
-                        item.selector.replace('INDEX', elementIndex.toString()));
-                    scrapedData = createFullLink(rowScrapedLink);
-                } else {
-                    scrapedData = await page.evaluate(sel =>
-                            document.querySelector(sel).innerHTML,
-                        item.selector.replace('INDEX', elementIndex.toString()));
-                }
-                gameDetails[key] = removeNewLine(scrapedData);
-            }
-            gameDetailsList.push(gameDetails);
-            elementIndex++;
-        }
+const scrapeGameDetails = node => {
+    let gameDetails = {};
+    if (node.childElementCount === 11) {
+        gameDetails['date'] =
     }
-    return gameDetailsList;
+
+    gameDetails['status'] = node.querySelector('td[height="20"]').innerText.trim();
+    gameDetails['teamName'] = node.querySelector('td[align=right]').innerText.trim();
+    return gameDetails;
 };
 
-const scrapeStats = async (gameList) => {
+const filterOutRowsWithGames = node => node.childElementCount >= 8;
+
+const createGameListFromScrapedData = scrapedData =>
+
+const getGamesOfThisWeek = async (page) => {
+    // Get all of the rows document.querySelectorAll('.eight.columns .trow2')
+    const ROW_SELECTOR = '.eight.columns .trow2';
+    const LINK_SELECTOR = '.eight.columns .trow2 a';
+
+    const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
+        , ROW_SELECTOR);
+
+    if(rowCount <= 1) return [[], []];
+
+    const scrapedGameData = await page.evaluate(sel =>
+            Array.from(document.querySelectorAll(sel))
+                .filter(filterOutRowsWithGames)
+                .map(scrapeGameDetails)
+    , ROW_SELECTOR);
+
+    const gameList = createGameListFromScrapedData(scrapedGameData);
+    const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
+        .map(item => item.href)
+        , LINK_SELECTOR);
+
+    return [gameList, linkList];
+};
+
+const getStats = async (gameList) => {
     const linkList = gameList.map(gameData => gameData.linkToStats);
 
     for (const link in linkList) {
@@ -106,4 +85,24 @@ const scrapeStats = async (gameList) => {
     }
 };
 
-module.exports = { getGamesOfThisWeek, scrapeStats, getLeagues };
+const loopNScrape = async (scrapeFunction, listToBeExtended, browser) => {
+    let extendedList = [];
+    // handle empty array, if the games are not present
+
+    for (const item in listToBeExtended) {
+        const newPage = await browser.newPage();
+        await newPage.goto('item.link');
+        const data = await scrapeFunction(newPage);
+        extendedList.push(data);
+        newPage.close();
+
+    }
+    return extendedList;
+};
+
+module.exports = {
+    getGamesOfThisWeek,
+    getStats,
+    getLeagues,
+    loopNScrape
+};
