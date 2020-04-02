@@ -1,4 +1,5 @@
-const { getValidDate } = require('./utils');
+const { } = require('./utils');
+const crypto = require('crypto');
 
 const getLeagues = async (page) => {
     const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
@@ -35,17 +36,27 @@ const getLeagues = async (page) => {
     return leagueDetailsList;
 };
 
-const createGameListFromScrapedData = scrapedData => {
+const createGameListFromScrapedData = (scrapedData, linkList) => {
     const homeTeamData = scrapedData.filter(item => Object.keys(item).length > 1);
     const awayTeamData = scrapedData.filter(item => Object.keys(item).length === 1);
 
     const gameData = [];
 
+    //TODO add hash
+    // const hash = crypto.createHash('md5').update('string ot be hashed').digest('hex');
     for(let i = 0; i < homeTeamData.length; i++) {
-        gameData.push(Object.assign(homeTeamData[i], awayTeamData[i]))
+        gameData.push(Object.assign(homeTeamData[i], awayTeamData[i], { linkToStats: linkList[i] }));
     }
 
-    return gameData;
+    const gameDataWitHashes = gameData.map(item =>{
+        const hash = crypto.createHash('md5')
+            .update(`${item.homeTeam} ${item.awayTeam} ${item.date}`)
+            .digest('hex');
+
+        return Object.assign(item, { hash });
+    });
+
+    return gameDataWitHashes;
 } ;
 
 const getGamesOfThisWeek = async (page) => {
@@ -90,15 +101,17 @@ const getGamesOfThisWeek = async (page) => {
                 })
     , ROW_SELECTOR);
 
-    const gameList = createGameListFromScrapedData(scrapedGameData);
-    console.log(gameList);
     const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
-        .map(item => item.href)
+            .map(item => item.href)
         , LINK_SELECTOR);
 
+    const gameList = createGameListFromScrapedData(scrapedGameData, linkList);
 
+    // TODO only give back if thi is not there, create hash from the game list. and compare hashes else empty array
 
-    return [gameList, linkList];
+    // todo also generate game hash
+    console.log(gameList);
+    return gameList;
 };
 
 const getStats = async (gameList) => {
@@ -112,13 +125,13 @@ const getStats = async (gameList) => {
     }
 };
 
-const loopNScrape = async (scrapeFunction, listToBeExtended, browser) => {
+const loopNScrape = async (scrapeFunction, linkList, browser) => {
     let extendedList = [];
     // handle empty array, if the games are not present
 
-    for (const item in listToBeExtended) {
+    for (const item in linkList) {
         const newPage = await browser.newPage();
-        await newPage.goto('item.link');
+        await newPage.goto(item);
         const data = await scrapeFunction(newPage);
         extendedList.push(data);
         newPage.close();
