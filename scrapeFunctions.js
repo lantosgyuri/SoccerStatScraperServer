@@ -1,4 +1,4 @@
-const { filterRows } = require('./utils');
+const { getValidDate } = require('./utils');
 
 const getLeagues = async (page) => {
     const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
@@ -35,23 +35,20 @@ const getLeagues = async (page) => {
     return leagueDetailsList;
 };
 
-const scrapeGameDetails = node => {
-    let gameDetails = {};
-    if (node.childElementCount === 11) {
-        gameDetails['date'] =
+const createGameListFromScrapedData = scrapedData => {
+    const homeTeamData = scrapedData.filter(item => Object.keys(item).length > 1);
+    const awayTeamData = scrapedData.filter(item => Object.keys(item).length === 1);
+
+    const gameData = [];
+
+    for(let i = 0; i < homeTeamData.length; i++) {
+        gameData.push(Object.assign(homeTeamData[i], awayTeamData[i]))
     }
 
-    gameDetails['status'] = node.querySelector('td[height="20"]').innerText.trim();
-    gameDetails['teamName'] = node.querySelector('td[align=right]').innerText.trim();
-    return gameDetails;
-};
-
-const filterOutRowsWithGames = node => node.childElementCount >= 8;
-
-const createGameListFromScrapedData = scrapedData =>
+    return gameData;
+} ;
 
 const getGamesOfThisWeek = async (page) => {
-    // Get all of the rows document.querySelectorAll('.eight.columns .trow2')
     const ROW_SELECTOR = '.eight.columns .trow2';
     const LINK_SELECTOR = '.eight.columns .trow2 a';
 
@@ -62,14 +59,44 @@ const getGamesOfThisWeek = async (page) => {
 
     const scrapedGameData = await page.evaluate(sel =>
             Array.from(document.querySelectorAll(sel))
-                .filter(filterOutRowsWithGames)
-                .map(scrapeGameDetails)
+                .filter(node => node.childElementCount >= 8)
+                .map(node => {
+                    let gameDetails = {};
+
+                    const getValidDate = (date, day) => {
+                        const now = new Date();
+                        const thisMonth = now.getMonth() + 1;
+                        const thisYear = now.getFullYear();
+
+                        const getDayString = date => date.toDateString().split(' ')[0];
+
+                        let dateToReturn = new Date(`${thisMonth} ${date} ${thisYear}`);
+
+                        let monthIncrease = 0;
+                        while(day !== getDayString(dateToReturn)) {
+                            dateToReturn = new Date(`${thisMonth + ++monthIncrease} ${date} ${thisYear}`)
+                        }
+
+                        return dateToReturn.toDateString()
+                    };
+
+                    if (node.childElementCount === 11) {
+                        const [day, date] = node.querySelector('td[bgcolor="#cccccc"]').innerText.split('\n');
+                        gameDetails['date'] = getValidDate(date, day);
+                        gameDetails['homeTeam'] = node.querySelector('td[align=right]').innerText.trim();
+                    }
+                    gameDetails['awayTeam'] = node.querySelector('td[align=right]').innerText.trim();
+                    return gameDetails;
+                })
     , ROW_SELECTOR);
 
     const gameList = createGameListFromScrapedData(scrapedGameData);
+    console.log(gameList);
     const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
         .map(item => item.href)
         , LINK_SELECTOR);
+
+
 
     return [gameList, linkList];
 };

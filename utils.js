@@ -4,4 +4,4 @@ const createFullLink = link => `https://www.soccerstats.com${link}`;
 
 const filterRows = rowList => rowList.map(item => item.innerText).filter(item => item.split(' ') > 3);
 
-module.exports = {  createFullLink, filterRows };
+module.exports = {  createFullLink, filterRows};
