@@ -28,11 +28,10 @@ const getLeagues = async (page) => {
                 return document.querySelector(sel).href
             }, LEAGUE_LINK_SELECTOR);
 
-            console.log(leagueDetails);
+            leagueDetailsList.push(leagueDetails);
             elementIndex ++;
         }
     }
-
     return leagueDetailsList;
 };
 
@@ -42,8 +41,6 @@ const createGameListFromScrapedData = (scrapedData, linkList) => {
 
     const gameData = [];
 
-    //TODO add hash
-    // const hash = crypto.createHash('md5').update('string ot be hashed').digest('hex');
     for(let i = 0; i < homeTeamData.length; i++) {
         gameData.push(Object.assign(homeTeamData[i], awayTeamData[i], { linkToStats: linkList[i] }));
     }
@@ -66,7 +63,7 @@ const getGamesOfThisWeek = async (page) => {
     const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
         , ROW_SELECTOR);
 
-    if(rowCount <= 1) return [[], []];
+    if(rowCount <= 1) return [];
 
     const scrapedGameData = await page.evaluate(sel =>
             Array.from(document.querySelectorAll(sel))
@@ -127,15 +124,18 @@ const getStats = async (gameList) => {
 
 const loopNScrape = async (scrapeFunction, linkList, browser) => {
     let extendedList = [];
-    // handle empty array, if the games are not present
+    console.log('loop an scrape starts');
+    console.log(linkList);
 
-    for (const item in linkList) {
+    // TODO change back to linklist.length
+    for (let i = 0; i <linkList.length; i++) {
+        console.log('loopNScarpe item is ', linkList[i]);
         const newPage = await browser.newPage();
-        await newPage.goto(item);
+        await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
+        console.log('data is', data);
         extendedList.push(data);
-        newPage.close();
-
+        await newPage.close();
     }
     return extendedList;
 };
