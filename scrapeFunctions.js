@@ -1,5 +1,6 @@
-const { } = require('./utils');
-const crypto = require('crypto');
+const {
+    createGameListFromScrapedData
+} = require('./rawListFinalizer');
 
 const getLeagues = async (page) => {
     const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
@@ -34,27 +35,6 @@ const getLeagues = async (page) => {
     }
     return leagueDetailsList;
 };
-
-const createGameListFromScrapedData = (scrapedData, linkList) => {
-    const homeTeamData = scrapedData.filter(item => Object.keys(item).length > 1);
-    const awayTeamData = scrapedData.filter(item => Object.keys(item).length === 1);
-
-    const gameData = [];
-
-    for(let i = 0; i < homeTeamData.length; i++) {
-        gameData.push(Object.assign(homeTeamData[i], awayTeamData[i], { linkToStats: linkList[i] }));
-    }
-
-    const gameDataWitHashes = gameData.map(item =>{
-        const hash = crypto.createHash('md5')
-            .update(`${item.homeTeam} ${item.awayTeam} ${item.date}`)
-            .digest('hex');
-
-        return Object.assign(item, { hash });
-    });
-
-    return gameDataWitHashes;
-} ;
 
 const getGamesOfThisWeek = async (page) => {
     const ROW_SELECTOR = '.eight.columns .trow2';
@@ -104,10 +84,6 @@ const getGamesOfThisWeek = async (page) => {
 
     const gameList = createGameListFromScrapedData(scrapedGameData, linkList);
 
-    // TODO only give back if thi is not there, create hash from the game list. and compare hashes else empty array
-
-    // todo also generate game hash
-    console.log(gameList);
     return gameList;
 };
 
@@ -123,21 +99,17 @@ const getStats = async (gameList) => {
 };
 
 const loopNScrape = async (scrapeFunction, linkList, browser) => {
-    let extendedList = [];
-    console.log('loop an scrape starts');
-    console.log(linkList);
-
+    let scrapedDataList = [];
     // TODO change back to linklist.length
     for (let i = 0; i <linkList.length; i++) {
-        console.log('loopNScarpe item is ', linkList[i]);
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-        console.log('data is', data);
-        extendedList.push(data);
+        scrapedDataList.push(data);
+        // TODO THIS IS NEW MAYBE THIS BREAKS
         await newPage.close();
     }
-    return extendedList;
+    return scrapedDataList;
 };
 
 module.exports = {

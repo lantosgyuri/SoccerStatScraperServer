@@ -7,9 +7,12 @@ const {
 } = require('./scrapeFunctions');
 
 const {
-    createFinalGameList,
     getLinkArray
 } = require('./utils');
+
+const {
+    organizeGameListsWithLeagues
+} = require('./rawListFinalizer');
 
 const scrape = async () => {
     const browser = await puppeteer.launch({headless: false});
@@ -20,9 +23,8 @@ const scrape = async () => {
         getGamesOfThisWeek,
         getLinkArray(leagueList, 'link'),
         browser);
-    console.log(rawGameLists);
-
-    //const gameList = createFinalGameList(leagueList, rowGameLists);
+    const gamesToSave = organizeGameListsWithLeagues(leagueList, rawGameLists);
+    console.log('gamesToSave', gamesToSave);
     //SAVE IN DB THE GAMES if empty array dont save
     // check for the hashes before start scraping the stats
     // so filter out. the hashes are saved per league
