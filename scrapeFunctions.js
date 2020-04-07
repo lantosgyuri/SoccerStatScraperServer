@@ -2,6 +2,10 @@ const {
     createGameListFromScrapedData
 } = require('./rawListFinalizer');
 
+const {
+    delayExecution
+} = require('./utils');
+
 const getLeagues = async (page) => {
     const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
     const LINK_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span > a';
@@ -104,7 +108,9 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
     for (let i = 0; i <linkList.length; i++) {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
-        const data = await scrapeFunction(newPage);
+        const data = await Promise.all(
+            [scrapeFunction(newPage), delayExecution()]
+        );
         scrapedDataList.push(data);
         // TODO THIS IS NEW MAYBE THIS BREAKS
         await newPage.close();
