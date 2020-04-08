@@ -91,20 +91,25 @@ const getGamesOfThisWeek = async (page) => {
     return gameList;
 };
 
-const getStats = async (gameList) => {
-    const linkList = gameList.map(gameData => gameData.linkToStats);
+const getStats = async (page) => {
+    const LEAGUE_NAME_SELECTOR = '#content > div:nth-child(1) > div:nth-child(1) > table > tbody > tr > td:nth-child(3) > font';
+    const HOME_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(1) > font';
+    const AWAY_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(2) > font';
+    const ROW_SELECTOR = 'div.seven.columns tr[height="22"]';
 
-    for (const link in linkList) {
-        const page = await browser.newPage();
-        await page.goto(link);
-        const scrapedStats = scrapeTeamStats(page);
-        page.close();
-    }
+    const [leagueName, homeTeamName, awayTeamName] = await page.evaluate(
+        selectorArray => selectorArray
+            .map(selector => document.querySelector(selector).innerText)
+        , [LEAGUE_NAME_SELECTOR, HOME_TEAM_NAME_SELECTOR, AWAY_TEAM_NAME_SELECTOR]);
+
+    console.log(leagueName, homeTeamName, awayTeamName);
+
+    const stats = await page.evaluate(sel=> {}
+    , ROW_SELECTOR);
 };
 
 const loopNScrape = async (scrapeFunction, linkList, browser) => {
     let scrapedDataList = [];
-    // TODO change back to linklist.length
     for (let i = 0; i <linkList.length; i++) {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
