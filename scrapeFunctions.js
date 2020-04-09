@@ -97,15 +97,42 @@ const getStats = async (page) => {
     const AWAY_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(2) > font';
     const ROW_SELECTOR = 'div.seven.columns tr[height="22"]';
 
-    const [leagueName, homeTeamName, awayTeamName] = await page.evaluate(
+    const namesToScrape = [
+        { name: 'leagueName',
+          selector: LEAGUE_NAME_SELECTOR,
+        },
+        { name: 'homeTeamName',
+            selector: HOME_TEAM_NAME_SELECTOR,
+        },
+        { name: 'awayTeamName',
+            selector: AWAY_TEAM_NAME_SELECTOR,
+        },
+    ];
+
+    const scrapedNames = await page.evaluate(
         selectorArray => selectorArray
-            .map(selector => document.querySelector(selector).innerText)
-        , [LEAGUE_NAME_SELECTOR, HOME_TEAM_NAME_SELECTOR, AWAY_TEAM_NAME_SELECTOR]);
+            .map(item => {
+                let name = {};
+                name[item.name] = document.querySelector(item.selector).innerText;
+                return name;
+                })
+            .reduce((acc, item) => Object.assign(acc, item))
+        , namesToScrape);
 
-    console.log(leagueName, homeTeamName, awayTeamName);
-
-    const stats = await page.evaluate(sel=> {}
+    const stats = await page.evaluate(sel=> {
+        const TD_SELECTOR = 'td[valign="middle"';
+        const rows = Array.from(document.querySelectorAll(sel));
+        return rows.map(node => {
+            let stat = {};
+            const data = Array.from(node.querySelectorAll(TD_SELECTOR))
+                .map(item => item.innerText);
+            stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
+            return stat;
+        });
+        }
     , ROW_SELECTOR);
+
+    return Object.assign(scrapedNames, { stats })
 };
 
 const loopNScrape = async (scrapeFunction, linkList, browser) => {
