@@ -1,4 +1,3 @@
-const fs = require('fs');
 const puppeteer = require('puppeteer');
 const {
     getGamesOfThisWeek,
@@ -8,7 +7,8 @@ const {
 } = require('./scrapeFunctions');
 
 const {
-    getLinkArray
+    getLinkArray,
+    getNestedLinkArray,
 } = require('./utils');
 
 const {
@@ -25,19 +25,15 @@ const scrape = async () => {
         getLinkArray(leagueList, 'link'),
         browser);
     const gamesToSave = organizeGameListsWithLeagues(leagueList, rawGameLists);
-    fs.writeFileSync('./templateJson/organizeGameListsWithLeagues.json', JSON.stringify(gamesToSave, null, " "), 'utf-8');
 
     //SAVE IN DB THE GAMES if empty array dont save
     // const statsToUpdate = compare hashes, get back leagues where update needed
 
-    // const statList = await getStats(page);
-
-    /* const teamStats = await loopNScrape(
+    const teamStats = await loopNScrape(
      getStats,
-     getLinkArray(statsToUpdate, 'games', 'linkToStats')
+     getNestedLinkArray(gamesToSave, 'games', 'linkToStats'),
+        browser
      );
-      And this will give back an array with every team stat, the DB handler should select out
-      */
 
     // will send the JSON to the mySQL service, the return value is a done or not done
    // TODO const saveStats = await saveStats(gameStats);

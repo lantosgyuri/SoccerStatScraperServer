@@ -97,6 +97,7 @@ const getStats = async (page) => {
     const AWAY_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(2) > font';
     const ROW_SELECTOR = 'div.seven.columns tr[height="22"]';
 
+    // TODO: WHAT IF TABLE DO NOT EXISTS?? ADD A CATCH BLOCK
     const namesToScrape = [
         { name: 'leagueName',
           selector: LEAGUE_NAME_SELECTOR,
@@ -141,7 +142,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-        // await delayExecution();
+        await delayExecution();
         scrapedDataList.push(data);
         await newPage.close();
     }
