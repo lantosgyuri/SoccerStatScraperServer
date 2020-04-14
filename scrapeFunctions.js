@@ -55,38 +55,38 @@ const getGamesOfThisWeek = async (page) => {
                 .map(node => {
                     let gameDetails = {};
 
-                    const getValidDate = (date, day) => {
-                        const now = new Date();
-                        const thisMonth = now.getMonth() + 1;
-                        const thisYear = now.getFullYear();
+                        const getValidDate = (date, day) => {
+                            const now = new Date();
+                            const thisMonth = now.getMonth() + 1;
+                            const thisYear = now.getFullYear();
 
-                        const getDayString = date => date.toDateString().split(' ')[0];
+                            const getDayString = date => date.toDateString().split(' ')[0];
 
-                        let dateToReturn = new Date(`${thisMonth} ${date} ${thisYear}`);
+                            let dateToReturn = new Date(`${thisMonth} ${date} ${thisYear}`);
 
-                        let monthIncrease = 0;
-                        while(day !== getDayString(dateToReturn)) {
-                            dateToReturn = new Date(`${thisMonth + ++monthIncrease} ${date} ${thisYear}`)
+                            let monthIncrease = 0;
+                            while(day !== getDayString(dateToReturn)) {
+                                dateToReturn = new Date(`${thisMonth + ++monthIncrease} ${date} ${thisYear}`)
+                            }
+
+                            return dateToReturn.toDateString()
+                        };
+
+                        if (node.childElementCount === 11) {
+                            const [day, date] = node.querySelector('td[bgcolor="#cccccc"]').innerText.split('\n');
+                            gameDetails['date'] = getValidDate(date, day);
+                            gameDetails['homeTeam'] = node.querySelector('td[align=right]').innerText.trim();
                         }
+                        gameDetails['awayTeam'] = node.querySelector('td[align=right]').innerText.trim();
+                        return gameDetails;
+                    })
+            , ROW_SELECTOR);
 
-                        return dateToReturn.toDateString()
-                    };
+        const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
+                .map(item => item.href)
+            , LINK_SELECTOR);
 
-                    if (node.childElementCount === 11) {
-                        const [day, date] = node.querySelector('td[bgcolor="#cccccc"]').innerText.split('\n');
-                        gameDetails['date'] = getValidDate(date, day);
-                        gameDetails['homeTeam'] = node.querySelector('td[align=right]').innerText.trim();
-                    }
-                    gameDetails['awayTeam'] = node.querySelector('td[align=right]').innerText.trim();
-                    return gameDetails;
-                })
-    , ROW_SELECTOR);
-
-    const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
-            .map(item => item.href)
-        , LINK_SELECTOR);
-
-    const gameList = createGameListFromScrapedData(scrapedGameData, linkList);
+        const gameList = createGameListFromScrapedData(scrapedGameData, linkList);
 
     return gameList;
 };
@@ -140,11 +140,9 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
     for (let i = 0; i <linkList.length; i++) {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
-        const data = await Promise.all(
-            [scrapeFunction(newPage), delayExecution()]
-        );
+        const data = await scrapeFunction(newPage);
+        // await delayExecution();
         scrapedDataList.push(data);
-        // TODO THIS IS NEW MAYBE THIS BREAKS
         await newPage.close();
     }
     return scrapedDataList;
