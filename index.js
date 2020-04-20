@@ -1,43 +1,23 @@
-const puppeteer = require('puppeteer');
 const {
-    getGamesOfThisWeek,
-    getStats,
-    loopNScrape,
-    getLeagues,
-} = require('./scrapeFunctions');
-
-const {
-    getLinkArray,
-    getNestedLinkArray,
-} = require('./utils');
-
-const {
-    organizeGameListsWithLeagues
-} = require('./rawListFinalizer');
+    getCurrentlyListedGames,
+    getTeamStats,
+    openBrowser,
+    closeBrowser,
+} = require('./scrape');
 
 const scrape = async () => {
-    const browser = await puppeteer.launch({ headless: false});
-    const page = await browser.newPage();
-    await page.goto('https://www.soccerstats.com');
-    const leagueList = await getLeagues(page);
-    const rawGameLists = await loopNScrape(
-        getGamesOfThisWeek,
-        getLinkArray(leagueList, 'link'),
-        browser);
-    const gamesToSave = organizeGameListsWithLeagues(leagueList, rawGameLists);
+    await openBrowser(true);
+    const currentlyListedGames = await getCurrentlyListedGames();
 
-    //SAVE IN DB THE GAMES if empty array dont save
-    // const statsToUpdate = compare hashes, get back leagues where update needed
+    // TODO IF SOMETHINGIS NOT THERE IT RETURNED AN EMPTY ARRAY
 
-    const teamStats = await loopNScrape(
-     getStats,
-     getNestedLinkArray(gamesToSave, 'games', 'linkToStats'),
-        browser
-     );
+    // TODO : return the league hasehes what needs to be update
+    // TODO : save the games and stats what needs to be updated
+    // TODO : only get the stats for the games what needs to be updated
+    const teamStats = await getTeamStats(currentlyListedGames);
 
-    // will send the JSON to the mySQL service, the return value is a done or not done
-   // TODO const saveStats = await saveStats(gameStats);
-    await browser.close();
+    // TODO : update the team stats
+    await closeBrowser();
 };
 
 
