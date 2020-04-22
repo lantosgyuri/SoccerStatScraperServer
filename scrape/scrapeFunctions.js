@@ -17,24 +17,28 @@ const getLeagues = async (page) => {
 
     while(!isRowEnd) {
         const LEAGUE_CONTAINER = CONTAINER_SELECTOR.replace('INDEX', elementIndex.toString());
-        const childElementCount = await page.evaluate(sel => {
-            return document.querySelector(sel).childNodes.length;
-        }, LEAGUE_CONTAINER);
-        if (childElementCount > 1) isRowEnd = true;
-        else {
-            let leagueDetails = {};
-            const LEAGUE_LINK_SELECTOR = LINK_SELECTOR.replace('INDEX', elementIndex.toString());
-            const LEAGUE_NAME_SELECTOR = LEAGUE_SELECTOR.replace('INDEX', elementIndex.toString());
+        try {
+            const childElementCount = await page.evaluate(sel => {
+                return document.querySelector(sel).childNodes.length;
+            }, LEAGUE_CONTAINER);
+            if (childElementCount > 1) isRowEnd = true;
+            else {
+                let leagueDetails = {};
+                const LEAGUE_LINK_SELECTOR = LINK_SELECTOR.replace('INDEX', elementIndex.toString());
+                const LEAGUE_NAME_SELECTOR = LEAGUE_SELECTOR.replace('INDEX', elementIndex.toString());
 
-            leagueDetails['name'] = await page.evaluate(sel => {
-                return document.querySelector(sel).title
-            }, LEAGUE_NAME_SELECTOR);
-            leagueDetails['link'] = await page.evaluate(sel => {
-                return document.querySelector(sel).href
-            }, LEAGUE_LINK_SELECTOR);
+                leagueDetails['name'] = await page.evaluate(sel => {
+                    return document.querySelector(sel).title
+                }, LEAGUE_NAME_SELECTOR);
+                leagueDetails['link'] = await page.evaluate(sel => {
+                    return document.querySelector(sel).href
+                }, LEAGUE_LINK_SELECTOR);
 
-            leagueDetailsList.push(leagueDetails);
-            elementIndex ++;
+                leagueDetailsList.push(leagueDetails);
+                elementIndex ++;
+            }
+        } catch(e) {
+            throw new Error(`Error in the getLeagues function error is: ${e}`);
         }
     }
     return leagueDetailsList;
@@ -44,16 +48,19 @@ const getGamesOfThisWeek = async (page) => {
     const ROW_SELECTOR = '.eight.columns .trow2';
     const LINK_SELECTOR = '.eight.columns .trow2 a';
 
-    const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
-        , ROW_SELECTOR);
+    let gameList;
 
-    if(rowCount <= 1) return [];
+    try {
+        const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
+            , ROW_SELECTOR);
 
-    const scrapedGameData = await page.evaluate(sel =>
-            Array.from(document.querySelectorAll(sel))
-                .filter(node => node.childElementCount >= 8)
-                .map(node => {
-                    let gameDetails = {};
+        if(rowCount <= 1) return [];
+
+        const scrapedGameData = await page.evaluate(sel =>
+                Array.from(document.querySelectorAll(sel))
+                    .filter(node => node.childElementCount >= 8)
+                    .map(node => {
+                        let gameDetails = {};
 
                         const getValidDate = (date, day) => {
                             const now = new Date();
@@ -86,7 +93,10 @@ const getGamesOfThisWeek = async (page) => {
                 .map(item => item.href)
             , LINK_SELECTOR);
 
-        const gameList = createGameListFromScrapedData(scrapedGameData, linkList);
+        gameList = createGameListFromScrapedData(scrapedGameData, linkList);
+    } catch(e) {
+        throw new Error(`Error in the getGamesOfTheWeek function error is: ${e}`);
+    }
 
     return gameList;
 };
@@ -109,28 +119,34 @@ const getStats = async (page) => {
         },
     ];
 
-    const scrapedNames = await page.evaluate(
-        selectorArray => selectorArray
-            .map(item => {
-                let name = {};
-                name[item.name] = document.querySelector(item.selector).innerText;
-                return name;
-                })
-            .reduce((acc, item) => Object.assign(acc, item))
-        , namesToScrape);
+    let scrapedNames, stats;
 
-    const stats = await page.evaluate(sel=> {
-        const TD_SELECTOR = 'td[valign="middle"]';
-        const rows = Array.from(document.querySelectorAll(sel));
-        return rows.map(node => {
-            let stat = {};
-            const data = Array.from(node.querySelectorAll(TD_SELECTOR))
-                .map(item => item.innerText);
-            stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
-            return stat;
-        });
-        }
-    , ROW_SELECTOR);
+    try {
+        scrapedNames = await page.evaluate(
+            selectorArray => selectorArray
+                .map(item => {
+                    let name = {};
+                    name[item.name] = document.querySelector(item.selector).innerText;
+                    return name;
+                })
+                .reduce((acc, item) => Object.assign(acc, item))
+            , namesToScrape);
+
+        stats = await page.evaluate(sel=> {
+                const TD_SELECTOR = 'td[valign="middle"]';
+                const rows = Array.from(document.querySelectorAll(sel));
+                return rows.map(node => {
+                    let stat = {};
+                    const data = Array.from(node.querySelectorAll(TD_SELECTOR))
+                        .map(item => item.innerText);
+                    stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
+                    return stat;
+                });
+            }
+            , ROW_SELECTOR);
+    } catch(e) {
+        throw new Error(`Error in the getStats function error is: ${e}`);
+    }
 
     return Object.assign(scrapedNames, { stats })
 };
