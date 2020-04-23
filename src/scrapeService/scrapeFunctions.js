@@ -3,7 +3,8 @@ const {
 } = require('./rawListFinalizer');
 
 const {
-    delayExecution
+    delayExecution,
+    throwError,
 } = require('./utils');
 
 const getLeagues = async (page) => {
@@ -38,7 +39,7 @@ const getLeagues = async (page) => {
                 elementIndex ++;
             }
         } catch(e) {
-            throw new Error(`Error in the getLeagues function error is: ${e}`);
+            throwError('Error in the getLeagues function ')(e);
         }
     }
     return leagueDetailsList;
@@ -95,7 +96,7 @@ const getGamesOfThisWeek = async (page) => {
 
         gameList = createGameListFromScrapedData(scrapedGameData, linkList);
     } catch(e) {
-        throw new Error(`Error in the getGamesOfTheWeek function error is: ${e}`);
+        throwError('Error in the getGamesOfTheWeek function ')(e);
     }
 
     return gameList;
@@ -145,7 +146,7 @@ const getStats = async (page) => {
             }
             , ROW_SELECTOR);
     } catch(e) {
-        throw new Error(`Error in the getStats function error is: ${e}`);
+        throwError('Error in the getStats function ')(e);
     }
 
     return Object.assign(scrapedNames, { stats })

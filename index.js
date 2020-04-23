@@ -3,7 +3,7 @@ const {
     getTeamStats,
     openBrowser,
     closeBrowser,
-} = require('./scrape');
+} = require('./src/scrapeService');
 
 const scrape = async () => {
     await openBrowser(true);
@@ -16,9 +16,10 @@ const scrape = async () => {
         // TODO : save the games and stats what needs to be updated
         // TODO : only get the stats for the games what needs to be updated
         const teamStats = await getTeamStats(currentlyListedGames);
+        // TODO SEND MAIL WITH THE SCRAPED DATA
     } catch (e) {
-        // TODO HANDLE ERROR
-        console.log('error is ', e);
+        // TODO SEND MAIL WITH THE ERROR
+        console.log(e);
     }
 
     // TODO : update the team stats

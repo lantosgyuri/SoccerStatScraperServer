@@ -11,8 +11,13 @@ const getLinkArray = (array, linkKey) => array.map(item => item[linkKey]);
 const getNestedLinkArray = (array, objectKey, linkKey) => Array.prototype.concat.apply([],
     array.map(item => getLinkArray(item[objectKey], linkKey)));
 
+const throwError = errorText => (error = '') => {
+    throw new Error(`${errorText} ${error}`)
+};
+
 module.exports = {
     getLinkArray,
     getNestedLinkArray,
-    delayExecution
+    delayExecution,
+    throwError,
 };

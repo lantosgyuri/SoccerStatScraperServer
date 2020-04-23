@@ -8,15 +8,16 @@ const {
     getLeagues,
 } = require('./scrapeFunctions');
 
-
-
 const {
     getLinkArray,
     getNestedLinkArray,
+    throwError,
 } = require('./utils');
 
 const createScrapeFunctions = () => {
     let browser = null;
+
+    const throwNoBrowserError = throwError('There is no browser open');
 
     const openBrowser = async (headless) => {
         browser = await puppeteer.launch({ headless });
@@ -25,7 +26,7 @@ const createScrapeFunctions = () => {
     const getCurrentlyListedGames = async () => {
         if (browser != null) {
             const page = await browser.newPage();
-            await page.goto('https://www.soccerstats.com');
+            await page.goto('https://www.soccerstat1s.com');
             const leagueList = await getLeagues(page);
             console.log('leagueList', leagueList);
             const rawGameLists = await loopNScrape(
@@ -33,6 +34,8 @@ const createScrapeFunctions = () => {
                 getLinkArray(leagueList, 'link'),
                 browser);
             return  organizeGameListsWithLeagues(leagueList, rawGameLists);
+        } else {
+            throwNoBrowserError();
         }
     };
 
@@ -43,11 +46,14 @@ const createScrapeFunctions = () => {
                 getNestedLinkArray(newGames, 'games', 'linkToStats'),
                 browser
             );
+        } else {
+            throwNoBrowserError()
         }
     };
 
     const closeBrowser = async () => {
         if(browser != null) await browser.close();
+        else throwNoBrowserError();
     };
 
     return {

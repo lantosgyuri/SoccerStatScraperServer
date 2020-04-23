@@ -1,4 +1,5 @@
 node_modules/
-Dockerfile
+docker-data
 .idea/
 test.js
+.env
