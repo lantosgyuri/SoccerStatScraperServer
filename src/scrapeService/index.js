@@ -26,7 +26,7 @@ const createScrapeFunctions = () => {
     const getCurrentlyListedGames = async () => {
         if (browser != null) {
             const page = await browser.newPage();
-            await page.goto('https://www.soccerstat1s.com');
+            await page.goto('https://www.soccerstats.com');
             const leagueList = await getLeagues(page);
             console.log('leagueList', leagueList);
             const rawGameLists = await loopNScrape(
