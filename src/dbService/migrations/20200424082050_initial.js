@@ -5,7 +5,8 @@ const {
     addTimeColumns,
     addHashColumn,
     createNameTable,
-    createReference
+    createReference,
+    createStatTable,
 } = require('../utils/tableUtils');
 
 /**
@@ -29,7 +30,11 @@ exports.up = async (knex) => {
         table.datetime('game_date');
         addHashColumn(table);
     });
-
+    await knex.schema.createTable(tableNames.weekly_home_stat, table => {
+        table.increments().notNullable()
+    });
+    await createStatTable(knex, tableNames.weekly_home_stat);
+    await createStatTable(knex, tableNames.weekly_away_stat);
 };
 
 exports.down = async (knex) => {
