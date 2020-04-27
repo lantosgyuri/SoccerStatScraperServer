@@ -26,7 +26,6 @@ const createStatTable = (knex, tableName) => knex.schema.createTable(tableName, 
     table.decimal('scored_in_both_halves');
     table.decimal('team_scored_first');
     table.decimal('leading_at_half_time');
-    table.decimal('goals_scored_per_match');
     table.decimal('goals_conceded_per_match');
     table.decimal('failed_to_score');
     table.decimal('lost_to_nil');
