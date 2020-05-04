@@ -1,4 +1,4 @@
-[
+module.exports = [
  {
   "leagueName": "Switzerland - Super League",
   "homeTeamName": "FC Thun",
@@ -9512,4 +9512,4 @@
    }
   ]
  }
-]
+];

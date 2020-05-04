@@ -1,4 +1,4 @@
-[
+module.exports = [
  {
   "name": "Argentina",
   "link": "https://www.soccerstats.com/latest.asp?league=argentina",
@@ -628,4 +628,4 @@
   ],
   "hash": "2a191d9b1c89784d03048b0c1b585810"
  }
-]
+];
