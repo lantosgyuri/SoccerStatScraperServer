@@ -12,7 +12,7 @@ const {
 /**
  * @param {Knex} knex
  */
-// table.bigInteger('AddressId').unsigned().index().references('id').inTable('Address')
+
 exports.up = async (knex) => {
     await createNameTable(knex, tableNames.league);
     await createNameTable(knex, tableNames.team);

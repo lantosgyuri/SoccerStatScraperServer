@@ -1,6 +1,6 @@
 const createRandomFunction = min => max => () => Math.floor(Math.random()* max) + min;
 const createRandomMin1Sec = createRandomFunction(1000);
-const getRandomSecBetween1To60 = createRandomMin1Sec(60000);
+const getRandomSecBetween1To60 = createRandomMin1Sec(10000);
 const delay = sec => {
     return new Promise(resolve => setTimeout(resolve, sec));
 };

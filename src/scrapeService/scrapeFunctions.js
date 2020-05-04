@@ -143,8 +143,9 @@ const getStats = async (page) => {
 
         stats = await page.evaluate(sel=> {
                 const TD_SELECTOR = 'td[valign="middle"]';
-                const rows = Array.from(document.querySelectorAll(sel));
-                return rows.map(node => {
+                const allRows = Array.from(document.querySelectorAll(sel));
+                const neededRows = allRows.splice(0,14);
+                return neededRows.map(node => {
                     let stat = {};
                     const data = Array.from(node.querySelectorAll(TD_SELECTOR))
                         .map(item => item.innerText);
@@ -166,7 +167,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-       // await delayExecution();
+        await delayExecution();
         scrapedDataList.push(data);
         await newPage.close();
     }
