@@ -4,6 +4,9 @@ const {
     createInsertReadyWeeklyHash
 } = require('../utils/dataExtractor');
 
+const gamesWithLeagues = require('../../scrapeService/scrapeResponseSamples/organizeGameListsWithLeagues');
+const stats = require('../../scrapeService/scrapeResponseSamples/teamStats');
+
 /**
  * @param {Knex} knex
  */
@@ -13,23 +16,26 @@ exports.seed = async knex => {
             .map(tableName => knex(tableName).del())
     );
 
-    const league = [
-        { name: 'Bundesliga' },
-        { name: 'Bundesliga1' },
-    ];
+    const leagues = gamesWithLeagues.map(item => ({ name: item.leagueName }));
 
     const createdLeague = await knex(tableNames.league)
-        .insert(league)
+        .insert(leagues)
         .returning('*');
 
     console.log('Created Leagues', createdLeague);
 
-    const teams = [
-        { name: 'Bayern' },
-        { name: 'StPauli' },
-        { name: 'Hertha' },
-        { name: 'Augsburg' },
-    ];
+    const teams = gamesWithLeagues.reduce((acc, item) => {
+        const { games } = item;
+        if(games.length > 0 ) {
+            const teams = games.map(item => [
+                { name: item.homeTeam },
+                { name: item.awayTeam },
+            ]);
+            return acc.concat(...teams)
+        } else {
+            return [...acc];
+        }
+    }, []);
 
     const createdTeams = await knex(tableNames.team)
         .insert(teams)
@@ -37,19 +43,24 @@ exports.seed = async knex => {
 
     console.log(' Created teams: ', createdTeams);
 
-    const weeklyGameHash = [
-        { name: 'Bundesliga', hash: '2a191d9b1c89784d03048b0c1b585810' },
-        { name: 'Bundesliga1', hash: '84306a607bf307a0fbb689d3f2d92a9e' },
-    ];
 
-    const leagueIds = await knex(tableNames.league).whereIn('name',
-        weeklyGameHash.map(item => item.name)).select('id');
+    const weeklyGameHash = gamesWithLeagues.filter(item => item.hash !== 'no hash');
 
-    console.log(leagueIds);
+    const hashesWithIds = await Promise.all(weeklyGameHash
+            .map(async item => {
+                const id = await knex(tableNames.league).where('name',
+                    item.leagueName).select('id').first();
+                return {
+                league_id: id.id,
+                hash: item.hash
+            }}));
+
+    console.log(hashesWithIds);
 
     const createdHash = await knex(tableNames.weekly_game_hash)
-        .insert(createInsertReadyWeeklyHash(weeklyGameHash, leagueIds))
+        .insert(hashesWithIds)
         .returning('*');
 
     console.log('Created Hash', createdHash);
+
 };

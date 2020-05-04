@@ -127,8 +127,9 @@ const getStats = async (page) => {
             selector: AWAY_TEAM_NAME_SELECTOR,
         },
     ];
-
-    let scrapedNames, stats;
+// TODO IT WAS MODIFIED BUT NOT TESTED
+    let scrapedNames = {};
+    let stats = [];
 
     try {
         scrapedNames = await page.evaluate(
@@ -144,14 +145,17 @@ const getStats = async (page) => {
         stats = await page.evaluate(sel=> {
                 const TD_SELECTOR = 'td[valign="middle"]';
                 const allRows = Array.from(document.querySelectorAll(sel));
-                const neededRows = allRows.splice(0,14);
-                return neededRows.map(node => {
-                    let stat = {};
-                    const data = Array.from(node.querySelectorAll(TD_SELECTOR))
-                        .map(item => item.innerText);
-                    stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
-                    return stat;
-                });
+               // TODO IT WAS MODIFIED BUT NOT TESTED THE OLD VERSION WAS WITHOUT THE IF CHECK
+                if(allRows && allRows.length > 15) {
+                    const neededRows = allRows.splice(0,14);
+                    return neededRows.map(node => {
+                        let stat = {};
+                        const data = Array.from(node.querySelectorAll(TD_SELECTOR))
+                            .map(item => item.innerText);
+                        stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
+                        return stat;
+                    });
+                }
             }
             , ROW_SELECTOR);
     } catch(e) {
