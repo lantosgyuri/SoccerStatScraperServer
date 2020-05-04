@@ -1,631 +1,407 @@
 module.exports = [
  {
-  "name": "Argentina",
-  "link": "https://www.soccerstats.com/latest.asp?league=argentina",
-  "games": [],
-  "hash": "no hash"
+  "link":"https://www.soccerstats.com/latest.asp?league=argentina",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Argentina - Primera Division"
  },
  {
-  "name": "Austria",
-  "link": "https://www.soccerstats.com/latest.asp?league=austria",
-  "games": [],
-  "hash": "no hash"
+  "link":"https://www.soccerstats.com/latest.asp?league=austria",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Austria - Bundesliga"
  },
  {
-  "name": "Australia",
-  "link": "https://www.soccerstats.com/latest.asp?league=australia",
-  "games": [],
-  "hash": "no hash"
+  "link":"https://www.soccerstats.com/latest.asp?league=australia",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Australia - A-League"
  },
  {
-  "name": "Belgium",
-  "link": "https://www.soccerstats.com/latest.asp?league=belgium",
-  "games": [],
-  "hash": "no hash"
+  "link":"https://www.soccerstats.com/latest.asp?league=belgium",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Belgium - First Division A"
  },
  {
-  "name": "Brazil",
-  "link": "https://www.soccerstats.com/latest.asp?league=brazil",
-  "games": [],
-  "hash": "no hash"
+  "link":"https://www.soccerstats.com/latest.asp?league=brazil",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Brazil - Serie A"
  },
  {
-  "name": "Switzerland",
-  "link": "https://www.soccerstats.com/latest.asp?league=switzerland",
-  "games": [
+  "link":"https://www.soccerstats.com/latest.asp?league=switzerland",
+  "games":[
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "FC Thun",
-    "awayTeam": "St. Gallen",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=158-3-5-2020-fc-thun-st.-gallen",
-    "hash": "310932b9772ea0e40e012ebca563bf33"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Lugano",
+    "awayTeam":"Servette",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=171-10-8-2020-lugano-servette",
+    "hash":"09187de679779e1ca7afeca023eacf01",
+    "leagueName":"Switzerland - Super League"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "FC Zurich",
-    "awayTeam": "BSC Young Boys",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=159-9-7-2020-fc-zurich-bsc-young-boys",
-    "hash": "9371b961f7cc4785980e5ab76af82ab7"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Sion",
+    "awayTeam":"BSC Young Boys",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=173-1-7-2020-sion-bsc-young-boys",
+    "hash":"f00a1577a0979a28d18b53b2027e001b",
+    "leagueName":"Switzerland - Super League"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Luzern",
-    "awayTeam": "Neuchatel Xamax",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=156-6-4-2020-luzern-neuchatel-xamax",
-    "hash": "7b3b7e76914ac3e550814322f79f3418"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Servette",
-    "awayTeam": "FC Basel",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=160-8-2-2020-servette-fc-basel",
-    "hash": "1de0a6014cad56857f6b93687285e55e"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Sion",
-    "awayTeam": "Lugano",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=157-1-10-2020-sion-lugano",
-    "hash": "9dae40f60e81d249b3cd59b51302cf8b"
+    "date":"Sun May 17 2020",
+    "homeTeam":"St. Gallen",
+    "awayTeam":"Neuchatel Xamax",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=174-5-4-2020-st.-gallen-neuchatel-xamax",
+    "hash":"af1cda0e667ec6d1433c691293173674",
+    "leagueName":"Switzerland - Super League"
    }
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"2a191d9b1c89784d03048b0c1b585810",
+  "leagueName":"Switzerland - Super League"
  },
  {
-  "name": "Germany - Bundesliga",
-  "link": "https://www.soccerstats.com/latest.asp?league=germany",
-  "games": [
+  "link":"https://www.soccerstats.com/latest.asp?league=germany",
+  "games":[
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Dortmund",
-    "awayTeam": "FSV Mainz",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=281-5-14-2020-dortmund-fsv-mainz",
-    "hash": "e4ad0a20dba03896c671d73e3b3ff532"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Dortmund",
+    "awayTeam":"Hoffenheim",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=299-5-4-2020-dortmund-hoffenheim",
+    "hash":"b9a5b755a3320009dbff27e095055f1d",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "E. Frankfurt",
-    "awayTeam": "Schalke 04",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=280-3-10-2020-e.-frankfurt-schalke-04",
-    "hash": "e2cb74d253e5f89601ff614e7e407d59"
+    "date":"Sat May 16 2020",
+    "homeTeam":"E. Frankfurt",
+    "awayTeam":"Paderborn",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=298-3-12-2020-e.-frankfurt-paderborn",
+    "hash":"5759920ffc13db3b6cc1e4b26c2ec333",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "FC Augsburg",
-    "awayTeam": "Hoffenheim",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=286-6-4-2020-fc-augsburg-hoffenheim",
-    "hash": "feca6f625dbe404e9a776b06f8668647"
+    "date":"Sat May 16 2020",
+    "homeTeam":"FC Augsburg",
+    "awayTeam":"RB Leipzig",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=305-6-18-2020-fc-augsburg-rb-leipzig",
+    "hash":"c2776fd2145bc18786b5b88c1eca9ff8",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Freiburg",
-    "awayTeam": "Hertha Berlin",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=285-13-2-2020-freiburg-hertha-berlin",
-    "hash": "8abc94d61dfb39d339eb13361501f0b1"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Freiburg",
+    "awayTeam":"Schalke 04",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=303-13-10-2020-freiburg-schalke-04",
+    "hash":"9ec5dde17b692929ed28120700e88b59",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Leverkusen",
-    "awayTeam": "FC Koln",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=284-11-16-2020-leverkusen-fc-koln",
-    "hash": "5f07c76a0e572751f22d08084eba1e58"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Leverkusen",
+    "awayTeam":"FSV Mainz",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=302-11-14-2020-leverkusen-fsv-mainz",
+    "hash":"a5f2bbf60a36487cb57221d938e990dd",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Monchengladbach",
-    "awayTeam": "Wolfsburg",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=283-9-15-2020-monchengladbach-wolfsburg",
-    "hash": "541cea2090c3b9c71b2290e6163c8f5e"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Monchengladbach",
+    "awayTeam":"Hertha Berlin",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=301-9-2-2020-monchengladbach-hertha-berlin",
+    "hash":"f91580c6dd555fb54817fda5f8c2e624",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "RB Leipzig",
-    "awayTeam": "Dusseldorf",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=288-18-8-2020-rb-leipzig-dusseldorf",
-    "hash": "6a63180b1c697062a9a67c79c7c2287a"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Union Berlin",
+    "awayTeam":"Dusseldorf",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=306-17-8-2020-union-berlin-dusseldorf",
+    "hash":"4da6dc2a5899b6a5d9aa5553e4b0913d",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Union Berlin",
-    "awayTeam": "Paderborn",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=287-17-12-2020-union-berlin-paderborn",
-    "hash": "5a6d9898ec340aebb8de457395383f4c"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Werder Bremen",
+    "awayTeam":"FC Koln",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=300-7-16-2020-werder-bremen-fc-koln",
+    "hash":"644b1471ccbc5ec63be105bcf7386574",
+    "leagueName":"Bundesliga"
    },
    {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Werder Bremen",
-    "awayTeam": "Bayern Munich",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany&stats=282-7-1-2020-werder-bremen-bayern-munich",
-    "hash": "feab935d47dfe7fa830f950e6d255f2b"
+    "date":"Sat May 16 2020",
+    "homeTeam":"Wolfsburg",
+    "awayTeam":"Bayern Munich",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=304-15-1-2020-wolfsburg-bayern-munich",
+    "hash":"5d767d74b7aacb1197d9cd29a348d1c3",
+    "leagueName":"Bundesliga"
    }
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"2a191d9b1c89784d03048b0c1b585810",
+  "leagueName":"Bundesliga"
  },
  {
-  "name": "Germany - 2. Bundesliga",
-  "link": "https://www.soccerstats.com/latest.asp?league=germany2",
-  "games": [
+  "link":"https://www.soccerstats.com/latest.asp?league=germany2",
+  "games":[
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Bielefeld",
-    "awayTeam": "Darmstadt",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=283-5-4-2020-bielefeld-darmstadt",
-    "hash": "a13d56612a1efbf534d4d52def59550c"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Bielefeld",
+    "awayTeam":"Heidenheim",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=301-5-14-2020-bielefeld-heidenheim",
+    "hash":"ce2dbe5048df11aee449f300a4a9d3bf",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Erzgebirge Aue",
-    "awayTeam": "Bochum",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=285-10-12-2020-erzgebirge-aue-bochum",
-    "hash": "3674c09184eee06a8df2a84aadeeac6d"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Dynamo Dresden",
+    "awayTeam":"Osnabruck",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=302-7-13-2020-dynamo-dresden-osnabruck",
+    "hash":"6d912ef68a42e372a4fabbc1d22933de",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Greuther Furth",
-    "awayTeam": "Heidenheim",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=284-9-14-2020-greuther-furth-heidenheim",
-    "hash": "76e613d7629650a71d60e0e4cb6bad26"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Greuther Furth",
+    "awayTeam":"Karlsruher SC",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=303-9-16-2020-greuther-furth-karlsruher-sc",
+    "hash":"cdff76aa14097cd9142ea1eaa197dafa",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Hamburger SV",
-    "awayTeam": "Osnabruck",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=281-3-13-2020-hamburger-sv-osnabruck",
-    "hash": "9eeac48f94a08a5771cb6e15dfbbc91c"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Hamburger SV",
+    "awayTeam":"Sandhausen",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=299-3-18-2020-hamburger-sv-sandhausen",
+    "hash":"77fd1decca59dc9278661bcf7f3951ab",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Hannover 96",
-    "awayTeam": "Sankt Pauli",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=282-2-6-2020-hannover-96-sankt-pauli",
-    "hash": "031ac81c5f2831f95853aa8139091c36"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Hannover 96",
+    "awayTeam":"Bochum",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=300-2-12-2020-hannover-96-bochum",
+    "hash":"b1dd06d8f3112d2331e8806397d29491",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Holstein Kiel",
-    "awayTeam": "Dynamo Dresden",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=288-17-7-2020-holstein-kiel-dynamo-dresden",
-    "hash": "24037deda019d25433a09d502be57999"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Holstein Kiel",
+    "awayTeam":"FC Nurnberg",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=306-17-8-2020-holstein-kiel-fc-nurnberg",
+    "hash":"7e7537c40b83e6ee413399ab28d11992",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Regensburg",
-    "awayTeam": "Karlsruher SC",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=286-11-16-2020-regensburg-karlsruher-sc",
-    "hash": "ad26aff82d4bfdd02dc9ffd7aa76c851"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Regensburg",
+    "awayTeam":"Erzgebirge Aue",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=304-11-10-2020-regensburg-erzgebirge-aue",
+    "hash":"1275ceab0d50e63827eccdd321b14ad1",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Stuttgart",
-    "awayTeam": "Sandhausen",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=280-1-18-2020-stuttgart-sandhausen",
-    "hash": "dfeb7a669f119ba6695f38e5a802d4d8"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Stuttgart",
+    "awayTeam":"Darmstadt",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=298-1-4-2020-stuttgart-darmstadt",
+    "hash":"546d3c655d805cbd3ac26887922b85bd",
+    "leagueName":"Germany - 2. Bundesliga"
    },
    {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Wehen Wiesbaden",
-    "awayTeam": "FC Nurnberg",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=germany2&stats=287-15-8-2020-wehen-wiesbaden-fc-nurnberg",
-    "hash": "b9f789d4a2f5183ce7767016a890ed7b"
+    "date":"Sun May 17 2020",
+    "homeTeam":"Wehen Wiesbaden",
+    "awayTeam":"Sankt Pauli",
+    "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany2&stats=305-15-6-2020-wehen-wiesbaden-sankt-pauli",
+    "hash":"7c7fe5671bace159fd3c3f072d75ff27",
+    "leagueName":"Germany - 2. Bundesliga"
    }
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"2a191d9b1c89784d03048b0c1b585810",
+  "leagueName":"Germany - 2. Bundesliga"
  },
  {
-  "name": "Denmark",
-  "link": "https://www.soccerstats.com/latest.asp?league=denmark",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "England - Premier League",
-  "link": "https://www.soccerstats.com/latest.asp?league=england",
-  "games": [
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Arsenal",
-    "awayTeam": "Liverpool",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=713-18-1-2020-arsenal-liverpool",
-    "hash": "8e6be9a03e44269210d72e5438666fdd"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Burnley",
-    "awayTeam": "Wolverhampton",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=717-7-6-2020-burnley-wolverhampton",
-    "hash": "f6578baf98bf16dd08bf82759195d2be"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Chelsea",
-    "awayTeam": "Norwich City",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=714-20-2-2020-chelsea-norwich-city",
-    "hash": "44b9d61138a63f55967d94909bdecffb"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Crystal Palace",
-    "awayTeam": "Manchester Utd",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=720-9-19-2020-crystal-palace-manchester-utd",
-    "hash": "55dfac0cb9ba268411b92170187f2e8c"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Everton",
-    "awayTeam": "Aston Villa",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=715-10-16-2020-everton-aston-villa",
-    "hash": "db4b8ef724db1caac93bc00f208be065"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Leicester City",
-    "awayTeam": "Sheffield Utd",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=716-5-14-2020-leicester-city-sheffield-utd",
-    "hash": "c17cf488917013b3a19eb2e52ed0d030"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Manchester City",
-    "awayTeam": "Bournemouth",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=711-4-13-2020-manchester-city-bournemouth",
-    "hash": "0a6de7ef47800f8b3966a53f66449ed7"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Newcastle Utd",
-    "awayTeam": "Tottenham",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=712-17-15-2020-newcastle-utd-tottenham",
-    "hash": "0bfa7143ae3486aeee89c432beb04a4a"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "Southampton",
-    "awayTeam": "Brighton",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=719-8-12-2020-southampton-brighton",
-    "hash": "c013f3415d7655b7d2ea40e7e1669875"
-   },
-   {
-    "date": "Sat May 02 2020",
-    "homeTeam": "West Ham Utd",
-    "awayTeam": "Watford",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=england&stats=718-3-11-2020-west-ham-utd-watford",
-    "hash": "0ec69cf37db3c8e4780826b79cd58fc1"
-   }
+  "link":"https://www.soccerstats.com/latest.asp?league=denmark",
+  "games":[
+
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"no hash",
+  "leagueName":"Denmark - Superligaen"
  },
  {
-  "name": "England - Championship",
-  "link": "https://www.soccerstats.com/latest.asp?league=england2",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "England - League One",
-  "link": "https://www.soccerstats.com/latest.asp?league=england3",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "England - League Two",
-  "link": "https://www.soccerstats.com/latest.asp?league=england4",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "England - National league",
-  "link": "https://www.soccerstats.com/latest.asp?league=england5",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Spain - La Liga",
-  "link": "https://www.soccerstats.com/latest.asp?league=spain",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Spain - La Liga 2",
-  "link": "https://www.soccerstats.com/latest.asp?league=spain2",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Finland",
-  "link": "https://www.soccerstats.com/latest.asp?league=finland",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "France - Ligue 1",
-  "link": "https://www.soccerstats.com/latest.asp?league=france",
-  "games": [
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Amiens",
-    "awayTeam": "Nimes",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=330-10-4-2020-amiens-nimes",
-    "hash": "f0f308ad693e5cf053b48350f055f60e"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Dijon",
-    "awayTeam": "Angers",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=328-17-13-2020-dijon-angers",
-    "hash": "db3024c1f7e7188aa2e9aa5d01f21c0c"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Lille",
-    "awayTeam": "Nice",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=323-5-9-2020-lille-nice",
-    "hash": "f99319855b35ebaa70f46970ab65925f"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Lyon",
-    "awayTeam": "Marseille",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=324-16-7-2020-lyon-marseille",
-    "hash": "3ec6e1e0676cd0f0465b1ffe83a34eec"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Monaco",
-    "awayTeam": "Bordeaux",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=327-15-14-2020-monaco-bordeaux",
-    "hash": "ab45081f5f592ddcaf0ab3d7b871f46e"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Montpellier",
-    "awayTeam": "Reims",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=321-1-8-2020-montpellier-reims",
-    "hash": "e5c7f2c0c8b57535222036a8cff4d960"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Paris SG",
-    "awayTeam": "Saint-Etienne",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=322-3-18-2020-paris-sg-saint-etienne",
-    "hash": "98f366057c63a68a32d110d270687bea"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Rennes",
-    "awayTeam": "Metz",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=325-2-20-2020-rennes-metz",
-    "hash": "b6aaf7afad6b38e2c59b22de510bd5f5"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Strasbourg",
-    "awayTeam": "Brest",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=329-19-11-2020-strasbourg-brest",
-    "hash": "90a01cbddc64e1bc53528df5fad5b8c0"
-   },
-   {
-    "date": "Sat Apr 18 2020",
-    "homeTeam": "Toulouse",
-    "awayTeam": "Nantes",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france&stats=326-12-6-2020-toulouse-nantes",
-    "hash": "85473769c09025f74cbe9e64a99f6259"
-   }
+  "link":"https://www.soccerstats.com/latest.asp?league=england",
+  "games":[
+
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"no hash",
+  "leagueName":"Premier League"
  },
  {
-  "name": "France - Ligue 2",
-  "link": "https://www.soccerstats.com/latest.asp?league=france2",
-  "games": [
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Auxerre",
-    "awayTeam": "Lorient",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=356-16-19-2020-auxerre-lorient",
-    "hash": "507091771b140629be74115e9eb46fc1"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Caen",
-    "awayTeam": "Rodez Aveyron",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=352-4-15-2020-caen-rodez-aveyron",
-    "hash": "df5ea06cde7b18156716ffbe0ff8f9bc"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Chateauroux",
-    "awayTeam": "Nancy",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=355-10-1-2020-chateauroux-nancy",
-    "hash": "654694072575ca695a54c5f64be1761e"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Grenoble",
-    "awayTeam": "Sochaux",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=359-8-3-2020-grenoble-sochaux",
-    "hash": "940ce3612e1ea0970cfd5ee1ba440d96"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Le Havre",
-    "awayTeam": "Clermont",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=354-6-9-2020-le-havre-clermont",
-    "hash": "ce8e3652d4607aeca70e13c6bf879215"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Lens",
-    "awayTeam": "AC Ajaccio",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=353-18-5-2020-lens-ac-ajaccio",
-    "hash": "7840cd036b435703872a869f70ed66ed"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Niort",
-    "awayTeam": "Chambly",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=357-11-13-2020-niort-chambly",
-    "hash": "4f13a4fdd9947a5736cada74ee03431b"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Orleans",
-    "awayTeam": "Le Mans",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=360-2-17-2020-orleans-le-mans",
-    "hash": "2d2c777a26e4861e0a86cba8181f7576"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Paris FC",
-    "awayTeam": "Valenciennes",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=358-20-14-2020-paris-fc-valenciennes",
-    "hash": "f9942d37dd9b412053be7255d0317982"
-   },
-   {
-    "date": "Fri May 01 2020",
-    "homeTeam": "Troyes",
-    "awayTeam": "Guingamp",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=france2&stats=351-12-7-2020-troyes-guingamp",
-    "hash": "ce534d052f918929e3cea557f60d4f78"
-   }
+  "link":"https://www.soccerstats.com/latest.asp?league=england2",
+  "games":[
+
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"no hash",
+  "leagueName":"Championship"
  },
  {
-  "name": "Netherlands",
-  "link": "https://www.soccerstats.com/latest.asp?league=netherlands",
-  "games": [
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Ajax Amsterdam",
-    "awayTeam": "VVV",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=289-4-9-2020-ajax-amsterdam-vvv",
-    "hash": "2ad43cfdb540d51fb896aa11d03c7a59"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "AZ Alkmaar",
-    "awayTeam": "FC Utrecht",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=290-17-16-2020-az-alkmaar-fc-utrecht",
-    "hash": "258bc6a4a7025383fa1a8a7adbc7e10d"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "FC Groningen",
-    "awayTeam": "ADO Den Haag",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=295-6-15-2020-fc-groningen-ado-den-haag",
-    "hash": "b5189b338a8d4361a68b64f01dfc1ce3"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "FC Twente",
-    "awayTeam": "Feyenoord",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=292-7-13-2020-fc-twente-feyenoord",
-    "hash": "a4e172bebcfe38a748551bcb20aec15f"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Heerenveen",
-    "awayTeam": "PSV Eindhoven",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=291-12-8-2020-heerenveen-psv-eindhoven",
-    "hash": "1e5192f679569a2106974f9ffda278bf"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "PEC Zwolle",
-    "awayTeam": "FC Emmen",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=296-1-5-2020-pec-zwolle-fc-emmen",
-    "hash": "5dc13387f947314e76a9b690b43cd9de"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "RKC Waalwijk",
-    "awayTeam": "Fortuna Sittard",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=294-10-18-2020-rkc-waalwijk-fortuna-sittard",
-    "hash": "60ec73fe831e3c5def237b69486f19c6"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Sparta",
-    "awayTeam": "Willem II",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=297-14-2-2020-sparta-willem-ii",
-    "hash": "8ef2b213d8d5b8e1e83f83d0000ad322"
-   },
-   {
-    "date": "Sun May 03 2020",
-    "homeTeam": "Vitesse Arnhem",
-    "awayTeam": "Heracles Almelo",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=netherlands&stats=293-3-11-2020-vitesse-arnhem-heracles-almelo",
-    "hash": "44459ae8d84ea910c23460734c669cfe"
-   }
+  "link":"https://www.soccerstats.com/latest.asp?league=england3",
+  "games":[
+
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"no hash",
+  "leagueName":"League One"
  },
  {
-  "name": "Italy - Serie A",
-  "link": "https://www.soccerstats.com/latest.asp?league=italy",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Italy - Serie B",
-  "link": "https://www.soccerstats.com/latest.asp?league=italy2",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Japan",
-  "link": "https://www.soccerstats.com/latest.asp?league=japan",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Norway",
-  "link": "https://www.soccerstats.com/latest.asp?league=norway",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Poland",
-  "link": "https://www.soccerstats.com/latest.asp?league=poland",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Portugal",
-  "link": "https://www.soccerstats.com/latest.asp?league=portugal",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Russia",
-  "link": "https://www.soccerstats.com/latest.asp?league=russia",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Scotland",
-  "link": "https://www.soccerstats.com/latest.asp?league=scotland",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Sweden",
-  "link": "https://www.soccerstats.com/latest.asp?league=sweden",
-  "games": [],
-  "hash": "no hash"
- },
- {
-  "name": "Turkey",
-  "link": "https://www.soccerstats.com/latest.asp?league=turkey",
-  "games": [
-   {
-    "date": "Sun Apr 19 2020",
-    "homeTeam": "Konyaspor",
-    "awayTeam": "Rizespor",
-    "linkToStats": "https://www.soccerstats.com/pmatch.asp?league=turkey&stats=269-13-6-2020-konyaspor-rizespor",
-    "hash": "84306a607bf307a0fbb689d3f2d92a9e"
-   }
+  "link":"https://www.soccerstats.com/latest.asp?league=england4",
+  "games":[
+
   ],
-  "hash": "2a191d9b1c89784d03048b0c1b585810"
+  "hash":"no hash",
+  "leagueName":"League Two"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=england5",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"England - National League"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=spain",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"La Liga"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=spain2",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Spain - La Liga 2"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=finland",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Finland - Veikkausliiga"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=france",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"France - Ligue 1"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=france2",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"France - Ligue 2"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=netherlands",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Netherlands - Eredivisie"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=italy",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Italy - Serie A"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=italy2",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Italy - Serie B"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=japan",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Japan - J1 League"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=norway",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Norway - Eliteserien"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=poland",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Poland - Ekstraklasa"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=portugal",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Portugal - Primeira Liga"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=russia",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Russia - Premier League"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=scotland",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Scotland - Premiership"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=sweden",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Sweden - Allsvenskan"
+ },
+ {
+  "link":"https://www.soccerstats.com/latest.asp?league=turkey",
+  "games":[
+
+  ],
+  "hash":"no hash",
+  "leagueName":"Turkey - Super Lig"
  }
 ];

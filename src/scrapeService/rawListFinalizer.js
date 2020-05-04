@@ -35,11 +35,14 @@ const organizeGameListsWithLeagues = (leagueList, rawGameList) => {
     };
 
     leagueList.forEach((item, index) => {
-        const currentGameList = rawGameList[index];
+        const currentGameList = rawGameList[index].gameList;
         const leagueWithGames = Object.assign(item, { games: currentGameList });
         const leagueWitHashAndGames = Object.assign(
             leagueWithGames,
-            { hash: createHashForGameTable(currentGameList) });
+            {
+                hash: createHashForGameTable(currentGameList),
+                leagueName: rawGameList[index].leagueName,
+            });
         organizedList.push(leagueWitHashAndGames);
     });
 

@@ -8,7 +8,6 @@ const {
 } = require('./utils');
 
 const getLeagues = async (page) => {
-    const LEAGUE_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span';
     const LINK_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX) > span > a';
     const CONTAINER_SELECTOR = '#headerlocal > div:nth-child(2) > table > tbody > tr > td:nth-child(INDEX)';
 
@@ -26,11 +25,7 @@ const getLeagues = async (page) => {
             else {
                 let leagueDetails = {};
                 const LEAGUE_LINK_SELECTOR = LINK_SELECTOR.replace('INDEX', elementIndex.toString());
-                const LEAGUE_NAME_SELECTOR = LEAGUE_SELECTOR.replace('INDEX', elementIndex.toString());
 
-                leagueDetails['name'] = await page.evaluate(sel => {
-                    return document.querySelector(sel).title
-                }, LEAGUE_NAME_SELECTOR);
                 leagueDetails['link'] = await page.evaluate(sel => {
                     return document.querySelector(sel).href
                 }, LEAGUE_LINK_SELECTOR);
@@ -48,58 +43,71 @@ const getLeagues = async (page) => {
 const getGamesOfThisWeek = async (page) => {
     const ROW_SELECTOR = '.eight.columns .trow2';
     const LINK_SELECTOR = '.eight.columns .trow2 a';
+    const LEAGUE_NAME_SELECTOR = '#content > div:nth-child(1) > div:nth-child(1) > table > tbody > tr > td:nth-child(3) > h1';
 
     let gameList;
+    let leagueName = '';
+
+    try {
+        leagueName = await page.evaluate(sel => document.querySelector(sel).innerText
+            , LEAGUE_NAME_SELECTOR);
+    } catch (e) {
+        throwError('Error in the getGamesOfTheWeek function, can not get leagueName ')(e);
+    }
 
     try {
         const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
             , ROW_SELECTOR);
 
-        if(rowCount <= 1) return [];
+        if(rowCount <= 1) {
+            gameList = [];
+        } else {
 
-        const scrapedGameData = await page.evaluate(sel =>
-                Array.from(document.querySelectorAll(sel))
-                    .filter(node => node.childElementCount >= 8)
-                    .map(node => {
-                        let gameDetails = {};
+            const scrapedGameData = await page.evaluate(sel =>
+                    Array.from(document.querySelectorAll(sel))
+                        .filter(node => node.childElementCount >= 8)
+                        .map(node => {
+                            let gameDetails = {};
 
-                        const getValidDate = (date, day) => {
-                            const now = new Date();
-                            const thisMonth = now.getMonth() + 1;
-                            const thisYear = now.getFullYear();
+                            const getValidDate = (date, day) => {
+                                const now = new Date();
+                                const thisMonth = now.getMonth() + 1;
+                                const thisYear = now.getFullYear();
 
-                            const getDayString = date => date.toDateString().split(' ')[0];
+                                const getDayString = date => date.toDateString().split(' ')[0];
 
-                            let dateToReturn = new Date(`${thisMonth} ${date} ${thisYear}`);
+                                let dateToReturn = new Date(`${thisMonth} ${date} ${thisYear}`);
 
-                            let monthIncrease = 0;
-                            while(day !== getDayString(dateToReturn)) {
-                                dateToReturn = new Date(`${thisMonth + ++monthIncrease} ${date} ${thisYear}`)
+                                let monthIncrease = 0;
+                                while(day !== getDayString(dateToReturn)) {
+                                    dateToReturn = new Date(`${thisMonth + ++monthIncrease} ${date} ${thisYear}`)
+                                }
+
+                                return dateToReturn.toDateString()
+                            };
+
+                            if (node.childElementCount === 11) {
+                                const [day, date] = node.querySelector('td[bgcolor="#cccccc"]').innerText.split('\n');
+                                gameDetails['date'] = getValidDate(date, day);
+                                gameDetails['homeTeam'] = node.querySelector('td[align=right]').innerText.trim();
                             }
+                            gameDetails['awayTeam'] = node.querySelector('td[align=right]').innerText.trim();
+                            return gameDetails;
+                        })
+                , ROW_SELECTOR);
 
-                            return dateToReturn.toDateString()
-                        };
+            const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
+                    .map(item => item.href)
+                , LINK_SELECTOR);
 
-                        if (node.childElementCount === 11) {
-                            const [day, date] = node.querySelector('td[bgcolor="#cccccc"]').innerText.split('\n');
-                            gameDetails['date'] = getValidDate(date, day);
-                            gameDetails['homeTeam'] = node.querySelector('td[align=right]').innerText.trim();
-                        }
-                        gameDetails['awayTeam'] = node.querySelector('td[align=right]').innerText.trim();
-                        return gameDetails;
-                    })
-            , ROW_SELECTOR);
-
-        const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
-                .map(item => item.href)
-            , LINK_SELECTOR);
-
-        gameList = createGameListFromScrapedData(scrapedGameData, linkList);
+            const rawGameList = createGameListFromScrapedData(scrapedGameData, linkList);
+            gameList = rawGameList.map(item => Object.assign(item, { leagueName }))
+        }
     } catch(e) {
         throwError('Error in the getGamesOfTheWeek function ')(e);
     }
 
-    return gameList;
+    return { leagueName, gameList } ;
 };
 
 const getStats = async (page) => {
@@ -158,7 +166,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-        await delayExecution();
+       // await delayExecution();
         scrapedDataList.push(data);
         await newPage.close();
     }
