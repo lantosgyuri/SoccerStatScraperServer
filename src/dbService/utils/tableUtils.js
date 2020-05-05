@@ -25,14 +25,14 @@ const createStatTable = (knex, tableName) => knex.schema.createTable(tableName, 
     table.decimal('scoring_rate');
     table.decimal('scored_in_both_halves');
     table.decimal('team_scored_first');
-    table.decimal('leading_at_half_time');
+    table.decimal('leading_at_halftime');
     table.decimal('avg_goals_against');
     table.decimal('failed_to_score');
     table.decimal('lost_to_nil');
     table.decimal('conceding_rate');
     table.decimal('conceded_in_both_halves');
     table.decimal('opponent_scored_first');
-    table.decimal('loosing_at_half_time');
+    table.decimal('losing_at_halftime');
     addTimeColumns(table);
 });
 

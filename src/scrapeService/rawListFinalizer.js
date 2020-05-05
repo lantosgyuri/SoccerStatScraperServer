@@ -29,8 +29,9 @@ const organizeGameListsWithLeagues = (leagueList, rawGameList) => {
         if (gameArray.length < 1) {
             return 'no hash';
         } else {
-            return createHash(rawGameList.reduce(
-                (accumulatedHash, currentObject) => accumulatedHash.concat(currentObject.hash), ''));
+            const allHash = gameArray.reduce(
+                (accumulatedHash, currentObject) => accumulatedHash.concat(currentObject.hash), '');
+            return createHash(allHash);
         }
     };
 

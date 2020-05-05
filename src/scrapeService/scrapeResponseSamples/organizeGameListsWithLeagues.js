@@ -146,7 +146,7 @@ module.exports = [
     "leagueName":"Bundesliga"
    }
   ],
-  "hash":"2a191d9b1c89784d03048b0c1b585810",
+  "hash":"b1dd06d8f3112d2331e8806397d29494",
   "leagueName":"Bundesliga"
  },
  {
@@ -225,7 +225,7 @@ module.exports = [
     "leagueName":"Germany - 2. Bundesliga"
    }
   ],
-  "hash":"2a191d9b1c89784d03048b0c1b585810",
+  "hash":"b1dd06d8f3112d2331e8806397d29499",
   "leagueName":"Germany - 2. Bundesliga"
  },
  {
