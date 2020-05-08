@@ -47,7 +47,7 @@ module.exports = [
                 "homeTeam":"AAAAAAAALugano",
                 "awayTeam":"Servette",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=171-10-8-2020-lugano-servette",
-                "hash":"09187de679779e1ca7afeca023eacf01",
+                "hash":"09187de679779e1ca7afeca023eacf01aaa",
                 "leagueName":"Switzerland - Super League"
             },
             {
@@ -55,7 +55,7 @@ module.exports = [
                 "homeTeam":"Sion",
                 "awayTeam":"BSC Young Boys",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=173-1-7-2020-sion-bsc-young-boys",
-                "hash":"f00a1577a0979a28d18b53b2027e001b",
+                "hash":"f00a1577a0979a28d18b53b2027e001baaaa",
                 "leagueName":"Switzerland - Super League"
             },
             {
@@ -63,7 +63,7 @@ module.exports = [
                 "homeTeam":"AAAAAAASt. Gallen",
                 "awayTeam":"Neuchatel Xamax",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=switzerland&stats=174-5-4-2020-st.-gallen-neuchatel-xamax",
-                "hash":"af1cda0e667ec6d1433c691293173674",
+                "hash":"af1cda0e667ec6d1433c691293173674aaaa",
                 "leagueName":"Switzerland - Super League"
             }
         ],
@@ -78,7 +78,7 @@ module.exports = [
                 "homeTeam":"Dortmund",
                 "awayTeam":"AAAAAAAAHoffenheim",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=299-5-4-2020-dortmund-hoffenheim",
-                "hash":"b9a5b755a3320009dbff27e095055f1d",
+                "hash":"b9a5b755a3320009dbff27e095055f1daaa",
                 "leagueName":"Bundesliga"
             },
             {
@@ -86,7 +86,7 @@ module.exports = [
                 "homeTeam":"E. Frankfurt",
                 "awayTeam":"Paderborn",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=298-3-12-2020-e.-frankfurt-paderborn",
-                "hash":"5759920ffc13db3b6cc1e4b26c2ec333",
+                "hash":"5759920ffc13db3b6cc1e4b26c2ec333aaaa",
                 "leagueName":"Bundesliga"
             },
             {
@@ -94,7 +94,7 @@ module.exports = [
                 "homeTeam":"FC Augsburg",
                 "awayTeam":"RB Leipzig",
                 "linkToStats":"https://www.soccerstats.com/pmatch.asp?league=germany&stats=305-6-18-2020-fc-augsburg-rb-leipzig",
-                "hash":"c2776fd2145bc18786b5b88c1eca9ff8",
+                "hash":"c2776fd2145bc18786b5b88c1eca9ff8aaaaa",
                 "leagueName":"Bundesliga"
             },
             {

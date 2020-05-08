@@ -1,6 +1,14 @@
 const Knex = require('knex');
 const tableNames = require('../constants/tableNames');
 
+const {
+    getLeagueNames,
+    getTeams,
+    filterNewRounds,
+    getGames,
+    getStats
+} = require('../utils/dataExtractor');
+
 const gamesWithLeagues = require('../../scrapeService/scrapeResponseSamples/organizeGameListsWithLeagues');
 const stats = require('../../scrapeService/scrapeResponseSamples/teamStats');
 const kettes = require('../../scrapeService/scrapeResponseSamples/kettes');
@@ -15,7 +23,7 @@ exports.seed = async knex => {
     );
 
     // leagues table
-    const leagues = gamesWithLeagues.map(item => ({ name: item.leagueName }));
+    const leagues = getLeagueNames(gamesWithLeagues);
 
     const createdLeague = await knex(tableNames.league)
         .insert(leagues)
@@ -24,20 +32,6 @@ exports.seed = async knex => {
     console.log('Created Leagues', createdLeague);
 
     // teams table
-
-    const getTeams = teamArray => teamArray.reduce((acc, item) => {
-        const { games } = item;
-        if(games.length > 0 ) {
-            const teams = games.map(item => [
-                { name: item.homeTeam },
-                { name: item.awayTeam },
-            ]);
-            return acc.concat(...teams)
-        } else {
-            return [...acc];
-        }
-    }, []);
-
     const teams = getTeams(gamesWithLeagues);
 
     const createdTeams = await knex(tableNames.team)
@@ -48,9 +42,12 @@ exports.seed = async knex => {
 
 
     // weekly game hash table
-    const weeklyGameHash = gamesWithLeagues.filter(item => item.hash !== 'no hash');
 
-    const hashesWithIds = await Promise.all(weeklyGameHash
+    const alreadySavedWeeklyHashes1 = await knex(tableNames.weekly_game_hash).select('hash');
+
+    const newWeeklyRounds = filterNewRounds(gamesWithLeagues, alreadySavedWeeklyHashes1);
+
+    const hashesWithIds = await Promise.all(newWeeklyRounds
             .map(async item => {
                 const id = await knex(tableNames.league).where('name',
                     item.leagueName).select('id').first();
@@ -65,12 +62,12 @@ exports.seed = async knex => {
 
     console.log('Created Hash', createdHash);
 
+    const alreadySavedGameHash = await knex(tableNames.game).select('hash');
     // game table
-    const games = gamesWithLeagues
-        .filter(item => item.games.length > 0)
-        .reduce((acc, item) => acc.concat(item.games), []);
+    const games = getGames(newWeeklyRounds);
+    const newGames = filterNewRounds(games, alreadySavedGameHash);
 
-    const gamesWithIds = await Promise.all(games
+    const gamesWithIds = await Promise.all(newGames
         .map(async item => {
             const league_id = await knex(tableNames.league).where('name',
                 item.leagueName).select('id').first();
@@ -94,39 +91,6 @@ exports.seed = async knex => {
         .returning('*');
 
     console.log(createdGames);
-
-    // stat tables
-    const createNameWithUnderScore = text => text.toLowerCase().replace(/ |-/g, '_');
-    const createNumeric = text => {
-        if(text.includes('%')) {
-            return parseFloat(text) / 100;
-        }
-        return parseFloat(text);
-    };
-
-    const getStats = (stats, team) => {
-        let teamNameKey;
-        let teamStatKey;
-        if(team === 'home') {
-            teamNameKey = 'homeTeamName';
-            teamStatKey = 'homeStat';
-        } else {
-            teamNameKey = 'awayTeamName';
-            teamStatKey = 'awayStat';
-        }
-
-        return stats.map(item => {
-            const teamName = item[teamNameKey];
-            const stats = item.stats.reduce((acc, itemStat) => {
-                const key = Object.keys(itemStat)[0];
-                const currentStatName = createNameWithUnderScore(key);
-                const currentStat = createNumeric(itemStat[key][teamStatKey]);
-                let stat = {};
-                stat[currentStatName] = currentStat;
-                return Object.assign(acc, { ...stat })
-            }, {});
-            return Object.assign({ teamName }, stats) });
-    };
 
     // home stat table
     const homeStats = getStats(stats, 'home');
@@ -198,11 +162,16 @@ exports.seed = async knex => {
 
     console.log(alreadySavedWeeklyHashes);
 
-    const weeklyGameHash2 = kettes
-        .filter(newHash=> newHash.hash !== 'no hash'
-         || alreadySavedWeeklyHashes.some(oldHash => oldHash === newHash));
+    const leaguesWithHashes2 = kettes
+        .filter(newHash=> newHash.hash !== 'no hash');
 
-    const hashesWithIds2 = await Promise.all(weeklyGameHash2
+    const newWeeklyRounds2 = leaguesWithHashes2
+        .filter(newHash => !alreadySavedWeeklyHashes
+            .some(oldHash => oldHash.hash === newHash.hash));
+
+    console.log('!!!!! NEWWEEKLY', newWeeklyRounds2);
+
+    const hashesWithIds2 = await Promise.all(newWeeklyRounds2
         .map(async item => {
             const id = await knex(tableNames.league).where('name',
                 item.leagueName).select('id').first();
@@ -211,10 +180,25 @@ exports.seed = async knex => {
                 hash: item.hash
             }}));
 
+    console.log(hashesWithIds2);
+
     const createdHash2 = await knex(tableNames.weekly_game_hash)
-        .insert(hashesWithIds)
+        .insert(hashesWithIds2)
         .returning('*');
 
     console.log('Created Hash', createdHash2);
+
+    // TODO at the moment I have saved everything what needed I know the new hashes.
+    // TODO NEWEEKLYROUNDS2
+
+    const alreadySavedGameHash1 = await knex(tableNames.game).select('hash');
+
+    const games1 = getGames(newWeeklyRounds2);
+    console.log('!!!', games1);
+    const newGames1 = filterNewRounds(games1, alreadySavedGameHash1);
+
+    console.log('!!!!!', newGames1);
+
+
 
 };
