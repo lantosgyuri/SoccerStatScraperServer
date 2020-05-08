@@ -3,6 +3,7 @@ const tableNames = require('../constants/tableNames');
 
 const gamesWithLeagues = require('../../scrapeService/scrapeResponseSamples/organizeGameListsWithLeagues');
 const stats = require('../../scrapeService/scrapeResponseSamples/teamStats');
+const kettes = require('../../scrapeService/scrapeResponseSamples/kettes');
 
 /**
  * @param {Knex} knex
@@ -23,7 +24,8 @@ exports.seed = async knex => {
     console.log('Created Leagues', createdLeague);
 
     // teams table
-    const teams = gamesWithLeagues.reduce((acc, item) => {
+
+    const getTeams = teamArray => teamArray.reduce((acc, item) => {
         const { games } = item;
         if(games.length > 0 ) {
             const teams = games.map(item => [
@@ -35,6 +37,8 @@ exports.seed = async knex => {
             return [...acc];
         }
     }, []);
+
+    const teams = getTeams(gamesWithLeagues);
 
     const createdTeams = await knex(tableNames.team)
         .insert(teams)
@@ -163,4 +167,54 @@ exports.seed = async knex => {
         .returning('*');
 
     console.log(createdAwayStats);
+
+ // TODO HERE START THE UNCOMMITED STUFF
+
+    async function upsertDoNothing(conflictingFields, tableName, dataToBeInserted) {
+        return await knex.raw(
+            `? ON CONFLICT (${conflictingFields})
+            DO NOTHING
+            RETURNING *;`,
+            [knex(tableName).insert(dataToBeInserted)],
+        );
+    }
+
+    const leagues2 = kettes.map(item => ({ name: item.leagueName }));
+
+    const createdLeague2 = await upsertDoNothing(
+      'name', tableNames.league, leagues2
+    );
+
+    const teams2 = getTeams(kettes);
+
+    const createdTeams2 = await upsertDoNothing(
+        'name', tableNames.team, teams2
+    );
+
+    console.log('Created Leagues2', createdLeague2);
+    console.log('Created Teams2', createdTeams2);
+
+    const alreadySavedWeeklyHashes = await knex(tableNames.weekly_game_hash).select('hash');
+
+    console.log(alreadySavedWeeklyHashes);
+
+    const weeklyGameHash2 = kettes
+        .filter(newHash=> newHash.hash !== 'no hash'
+         || alreadySavedWeeklyHashes.some(oldHash => oldHash === newHash));
+
+    const hashesWithIds2 = await Promise.all(weeklyGameHash2
+        .map(async item => {
+            const id = await knex(tableNames.league).where('name',
+                item.leagueName).select('id').first();
+            return {
+                league_id: id.id,
+                hash: item.hash
+            }}));
+
+    const createdHash2 = await knex(tableNames.weekly_game_hash)
+        .insert(hashesWithIds)
+        .returning('*');
+
+    console.log('Created Hash', createdHash2);
+
 };
