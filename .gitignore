@@ -2,5 +2,5 @@ node_modules/
 docker-data
 dockerData
 .idea/
-test.js
+testi.js
 .env
