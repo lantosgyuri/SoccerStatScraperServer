@@ -27,21 +27,25 @@ const insertIntoLeagues = createInsertIntoLeagues('name');
 const insertIntoTeams = createInsertIntoTeams('name');
 
 // Queries
-const createQuery = dataBase => tableName => async (...fields) =>
-            dataBase(tableName).select(...fields);
+const createQuery = dataBase => tableName => (...fields) => async () =>
+            dataBase.from(tableName).select(fields);
 
 const createIdQueryForName = dataBase => tableName => async name =>
-            dataBase(tableName).where('name', name).select('id').first();
+            dataBase.from(tableName).where('name', name).select('id').first();
 
 const query = createQuery(db);
 const idQuery = createIdQueryForName(db);
 
 const createWeeklyGameHashQuery = query(tableNames.weekly_game_hash);
+const createGameHashQuery = query(tableNames.game);
 
 const getLeagueIdWhereNameFromDB = idQuery(tableNames.league);
 const getTeamIdWhereNameFromDB = idQuery(tableNames.team);
 
 const getWeeklyGameHashFromDB = createWeeklyGameHashQuery('hash');
+const getGameHashFromDB = createGameHashQuery('hash');
+
+// TODO stat and a game queries, always pick the latest one as, there will be the data always be inserted
 
 module.exports = {
     insertIntoLeagues,
@@ -51,6 +55,7 @@ module.exports = {
     insertIntoAwayStat,
     insertIntoHomeStat,
     getWeeklyGameHashFromDB,
+    getGameHashFromDB,
     getLeagueIdWhereNameFromDB,
     getTeamIdWhereNameFromDB,
 };
