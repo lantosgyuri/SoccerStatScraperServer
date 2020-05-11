@@ -6,21 +6,21 @@ const {
 } = require('./src/scrapeService');
 
 const {
-    updateGamesInDB,
+    updateGamesAndLeaguesInDB,
     updateStatsInDB,
 } = require('./src/dbService');
 
 const fs = require('fs');
 
 const scrape = async () => {
-    await openBrowser(false);
+    await openBrowser(true);
     try {
         const currentlyListedGames = await getCurrentlyListedGames();
-       // fs.writeFileSync('./new1.json', JSON.stringify(currentlyListedGames));
-        //const newGames = await updateGamesInDB(currentlyListedGames);
-        const newTeamStats = await getTeamStats(currentlyListedGames);
-       // fs.writeFileSync('./new2.json', JSON.stringify(newTeamStats));
-        //await updateStatsInDB(newTeamStats);
+        fs.writeFileSync('./newLeagues1.json', JSON.stringify(currentlyListedGames));
+        const newRounds = await updateGamesAndLeaguesInDB(currentlyListedGames);
+        const newTeamStats = await getTeamStats(newRounds);
+        fs.writeFileSync('./newStats2.json', JSON.stringify(newTeamStats));
+        await updateStatsInDB(newTeamStats);
     } catch (e) {
         console.log(e);
     }

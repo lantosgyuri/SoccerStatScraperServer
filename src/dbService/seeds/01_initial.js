@@ -11,7 +11,6 @@ const {
 
 const gamesWithLeagues = require('../../scrapeService/scrapeResponseSamples/organizeGameListsWithLeagues');
 const stats = require('../../scrapeService/scrapeResponseSamples/teamStats');
-const kettes = require('../../scrapeService/scrapeResponseSamples/kettes');
 
 /**
  * @param {Knex} knex
