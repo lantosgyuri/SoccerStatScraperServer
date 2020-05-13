@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const {
     getCurrentlyListedGames,
     getTeamStats,
@@ -10,7 +12,7 @@ const {
     updateStatsInDB,
 } = require('./src/dbService');
 
-const fs = require('fs');
+const app = require('./src/api/app');
 
 const scrape = async () => {
     await openBrowser(true);
@@ -28,5 +30,9 @@ const scrape = async () => {
     await closeBrowser();
 };
 
+// scrape();
 
-scrape();
+const port = process.env.port || 5050;
+app.listen(port, () => {
+   console.log(`App is listening at port ${port}`)
+});

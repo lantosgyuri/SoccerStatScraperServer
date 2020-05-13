@@ -127,7 +127,7 @@ const getStats = async (page) => {
             selector: AWAY_TEAM_NAME_SELECTOR,
         },
     ];
-// TODO IT WAS MODIFIED BUT NOT TESTED
+
     let scrapedNames = {};
     let stats = [];
 
