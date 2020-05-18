@@ -47,6 +47,13 @@ const getGameHashFromDB = createGameHashQuery('hash');
 
 // TODO stat and a game queries, always pick the latest one as, there will be the data always be inserted
 
+const getFilteredGamesFromDB = async () => db(`${tableNames.game} AS g`)
+    .join(`${tableNames.league} as l`, 'g.league_id', 'l.id' )
+    .join(`${tableNames.team} as t1`, 'g.home_team_id', 't1.id')
+    .join(`${tableNames.team} as t2`, 'g.away_team_id', 't2.id')
+    .select('l.name', 't1.name', 't2.name')
+    .where('l.name', 'Bundesliga');
+
 module.exports = {
     insertIntoLeagues,
     insertIntoTeams,
@@ -58,4 +65,5 @@ module.exports = {
     getGameHashFromDB,
     getLeagueIdWhereNameFromDB,
     getTeamIdWhereNameFromDB,
+    getFilteredGamesFromDB,
 };
