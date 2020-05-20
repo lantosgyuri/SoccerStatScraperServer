@@ -15,13 +15,13 @@ const {
 const app = require('./src/api/app');
 
 const scrape = async () => {
-    await openBrowser(true);
+    await openBrowser(false);
     try {
         const currentlyListedGames = await getCurrentlyListedGames();
-        fs.writeFileSync('./newLeagues1.json', JSON.stringify(currentlyListedGames));
+        fs.writeFileSync('./newLeagues34.json', JSON.stringify(currentlyListedGames));
         const newRounds = await updateGamesAndLeaguesInDB(currentlyListedGames);
         const newTeamStats = await getTeamStats(newRounds);
-        fs.writeFileSync('./newStats2.json', JSON.stringify(newTeamStats));
+        fs.writeFileSync('./newStats34.json', JSON.stringify(newTeamStats));
         await updateStatsInDB(newTeamStats);
     } catch (e) {
         console.log(e);
@@ -30,9 +30,10 @@ const scrape = async () => {
     await closeBrowser();
 };
 
-// scrape();
+//scrape();
 
 const port = process.env.port || 5050;
 app.listen(port, () => {
    console.log(`App is listening at port ${port}`)
 });
+

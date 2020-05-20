@@ -1,5 +1,6 @@
 const db = require('../db');
 const tableNames = require('../constants/tableNames');
+const moment = require('moment');
 
 // Inserts
 const createUpsertOrDoNothing = dataBase => tableName => conflictingFields => async dataToBeInserted =>
@@ -27,13 +28,13 @@ const insertIntoLeagues = createInsertIntoLeagues('name');
 const insertIntoTeams = createInsertIntoTeams('name');
 
 // Queries
-const createQuery = dataBase => tableName => (...fields) => async () =>
+const createBaseQuery = dataBase => tableName => (...fields) => async () =>
             dataBase.from(tableName).select(fields);
 
 const createIdQueryForName = dataBase => tableName => async name =>
             dataBase.from(tableName).where('name', name).select('id').first();
 
-const query = createQuery(db);
+const query = createBaseQuery(db);
 const idQuery = createIdQueryForName(db);
 
 const createWeeklyGameHashQuery = query(tableNames.weekly_game_hash);
@@ -45,14 +46,36 @@ const getTeamIdWhereNameFromDB = idQuery(tableNames.team);
 const getWeeklyGameHashFromDB = createWeeklyGameHashQuery('hash');
 const getGameHashFromDB = createGameHashQuery('hash');
 
-// TODO stat and a game queries, always pick the latest one as, there will be the data always be inserted
+const getFilteredGamesFromDB = async () => {
+    const yesterday = moment().subtract(1, 'day').toISOString();
+    return db(`${tableNames.game} AS g`)
+        .join(`${tableNames.league} as l`, 'g.league_id', 'l.id' )
+        .join(`${tableNames.team} as t1`, 'g.home_team_id', 't1.id')
+        .join(`${tableNames.team} as t2`, 'g.away_team_id', 't2.id')
+       // .leftJoin(`${tableNames.weekly_home_stat} as hst`, 'g.home_team_id', 'hst.team_id')
+       // .leftJoin(`${tableNames.weekly_home_stat} as ast`, 'g.away_team_id', 'ast.team_id')
+        .select(
+            'l.name AS league',
+            't1.name AS home_team',
+            'g.home_team_id AS home_team_id',
+            'g.away_team_id AS away_team_id',
+            't2.name AS away_team',
+            'g.game_date AS date')
+        .where('g.game_date', '>', yesterday)
+        .andWhere('l.name', 'Turkey - Super Lig');
+};
 
-const getFilteredGamesFromDB = async () => db(`${tableNames.game} AS g`)
-    .join(`${tableNames.league} as l`, 'g.league_id', 'l.id' )
-    .join(`${tableNames.team} as t1`, 'g.home_team_id', 't1.id')
-    .join(`${tableNames.team} as t2`, 'g.away_team_id', 't2.id')
-    .select('l.name', 't1.name', 't2.name')
-    .where('l.name', 'Bundesliga');
+const createBaseStatQuery = dataBase => tableName => async id =>
+    dataBase.from(tableName)
+        .where('team_id', id)
+        .select('*')
+        .orderBy('id', 'desc')
+        .limit(1);
+
+const createStatQuery = createBaseStatQuery(db);
+
+const getHomeTeamStatFromDB = createStatQuery(tableNames.weekly_home_stat);
+const getAwayTeamStatFromDB = createStatQuery(tableNames.weekly_away_stat);
 
 module.exports = {
     insertIntoLeagues,
@@ -66,4 +89,6 @@ module.exports = {
     getLeagueIdWhereNameFromDB,
     getTeamIdWhereNameFromDB,
     getFilteredGamesFromDB,
+    getHomeTeamStatFromDB,
+    getAwayTeamStatFromDB,
 };

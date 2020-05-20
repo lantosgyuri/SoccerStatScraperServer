@@ -2,9 +2,8 @@ const { getFilteredGamesFromDB } = require('../../../dbService/utils/dbOperation
 
 const getFilteredGames = async (req,res) => {
     try {
-        // cerate a base query body
         const games = await getFilteredGamesFromDB();
-        res.status(200).json({ games });
+        res.status(200).json({ games, length: games.length });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }

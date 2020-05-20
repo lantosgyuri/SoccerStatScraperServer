@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/games', Routes.games);
+app.use('/api/v1/stat', Routes.stats);
 
 configErrorHandler(app);
 
