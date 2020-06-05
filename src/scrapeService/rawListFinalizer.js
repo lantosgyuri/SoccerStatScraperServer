@@ -5,6 +5,8 @@ const createHash = text => crypto.createHash('md5')
     .digest('hex');
 
 const createGameListFromScrapedData = (scrapedData, linkList) => {
+    if (scrapedData.length === 0) return [];
+
     const homeTeamData = scrapedData.filter(item => Object.keys(item).length > 1);
     const awayTeamData = scrapedData.filter(item => Object.keys(item).length === 1);
 

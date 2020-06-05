@@ -59,11 +59,11 @@ const getGamesOfThisWeek = async (page) => {
         const rowCount = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).length
             , ROW_SELECTOR);
 
+
         if(rowCount <= 1) {
             gameList = [];
         } else {
-
-            const scrapedGameData = await page.evaluate(sel =>
+           const scrapeGames = page.evaluate(sel =>
                     Array.from(document.querySelectorAll(sel))
                         .filter(node => node.childElementCount >= 8)
                         .map(node => {
@@ -96,12 +96,19 @@ const getGamesOfThisWeek = async (page) => {
                         })
                 , ROW_SELECTOR);
 
+           const addTimeOut = new Promise((resolve) => setTimeout(resolve, 30000, []));
+
+           const scrapedGameData = await Promise.race([
+               scrapeGames,
+               addTimeOut,
+           ]);
+
             const linkList = await page.evaluate(sel => Array.from(document.querySelectorAll(sel))
                     .map(item => item.href)
                 , LINK_SELECTOR);
 
             const rawGameList = createGameListFromScrapedData(scrapedGameData, linkList);
-            gameList = rawGameList.map(item => Object.assign(item, { leagueName }))
+            gameList = rawGameList.map(item => Object.assign(item, { leagueName }));
         }
     } catch(e) {
         throwError('Error in the getGamesOfTheWeek function ')(e);
@@ -145,7 +152,6 @@ const getStats = async (page) => {
         stats = await page.evaluate(sel=> {
                 const TD_SELECTOR = 'td[valign="middle"]';
                 const allRows = Array.from(document.querySelectorAll(sel));
-               // TODO IT WAS MODIFIED BUT NOT TESTED THE OLD VERSION WAS WITHOUT THE IF CHECK
                 if(allRows && allRows.length > 15) {
                     const neededRows = allRows.splice(0,14);
                     return neededRows.map(node => {
@@ -171,7 +177,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-        await delayExecution();
+        // await delayExecution();
         scrapedDataList.push(data);
         await newPage.close();
     }
