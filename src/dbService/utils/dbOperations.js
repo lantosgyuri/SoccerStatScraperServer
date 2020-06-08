@@ -1,7 +1,6 @@
 const db = require('../db');
 const tableNames = require('../constants/tableNames');
 const moment = require('moment');
-const { statNameHome, statNameAway } = require('../constants/statColumnNames');
 
 // Inserts
 const createUpsertOrDoNothing = dataBase => tableName => conflictingFields => async dataToBeInserted =>
@@ -63,9 +62,9 @@ const baseQuery =  db(`${tableNames.game} AS g`)
     .select(
         'l.name AS league',
         't1.name AS home_team',
+        't2.name AS away_team',
         'g.home_team_id AS home_team_id',
         'g.away_team_id AS away_team_id',
-        't2.name AS away_team',
         'g.game_date AS date')
     .where('g.game_date', '>', yesterday);
 
@@ -75,12 +74,11 @@ const addParamToFilteredGamesQuery = params => {
    return (baseQuery) => baseQuery.where(param, '>', value);
 };
 
-const addParamToFilteredGamesQuery2 = params => {
-    return (baseQuery) => baseQuery.where('l.name', 'Turkey - Super Lig');
-};
-
-const getFilteredGamesFromDB = (params) => {
-
+const getFilteredGamesFromDB = async (params) => {
+    const filters = params.map(item => addParamToFilteredGamesQuery(item));
+    const pipe = fns => x => fns.reduce((y, f) => f(y), x);
+    const applyAllFilters = pipe(filters);
+    return applyAllFilters(baseQuery);
 };
 
 const createBaseStatQuery = dataBase => tableName => async id =>

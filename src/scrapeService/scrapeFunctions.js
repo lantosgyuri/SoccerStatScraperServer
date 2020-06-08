@@ -177,7 +177,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
         const newPage = await browser.newPage();
         await newPage.goto(linkList[i]);
         const data = await scrapeFunction(newPage);
-        // await delayExecution();
+        await delayExecution();
         scrapedDataList.push(data);
         await newPage.close();
     }

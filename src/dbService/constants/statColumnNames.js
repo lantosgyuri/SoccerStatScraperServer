@@ -1,4 +1,4 @@
-const statColumNames = {
+const statColumnNames = {
     avg_goals_for:  'avg_goals_for',
     clean_sheets: 'clean_sheets',
     won_to_nil: 'won_to_nil',
@@ -24,6 +24,6 @@ const addTeamPrefix = (preFix, nameObj) => Object.entries(nameObj)
     } , {});
 
 module.exports = {
-    statNameHome: addTeamPrefix('hst', statColumNames),
-    statNameAway: addTeamPrefix('ast', statColumNames),
+    statNameHome: addTeamPrefix('hst', statColumnNames),
+    statNameAway: addTeamPrefix('ast', statColumnNames),
 };
