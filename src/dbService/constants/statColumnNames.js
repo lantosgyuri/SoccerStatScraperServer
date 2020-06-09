@@ -26,4 +26,5 @@ const addTeamPrefix = (preFix, nameObj) => Object.entries(nameObj)
 module.exports = {
     statNameHome: addTeamPrefix('hst', statColumnNames),
     statNameAway: addTeamPrefix('ast', statColumnNames),
+    statColumnNames,
 };

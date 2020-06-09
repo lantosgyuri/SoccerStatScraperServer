@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const { getFilteredGames } = require('./gamesController');
+const { filteredGamesValidator } = require('../../config/middlewares');
 
 const routes = Router();
 
-// todo change get to post
-routes.post('/filter', getFilteredGames);
+routes.post('/filter', filteredGamesValidator, getFilteredGames);
 
 module.exports = routes;

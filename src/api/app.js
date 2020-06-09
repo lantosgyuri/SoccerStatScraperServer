@@ -10,8 +10,10 @@ const Routes = require('./modules');
 const app = express();
 configMiddlewares(app);
 
-app.get('/', (req, res) => {
-    res.send('Use an existing route')
+app.get('/', (req, res, next) => {
+    const error = new Error('Use an existing route');
+    res.status(404);
+    next(error);
 });
 
 app.use('/api/v1/games', Routes.games);

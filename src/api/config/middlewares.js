@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
 
+const { statColumnNames } = require('../../dbService/constants/statColumnNames');
+
 const configMiddlewares = app => {
     app.use(morgan('tiny'));
     app.use(compression());
@@ -31,7 +33,40 @@ const configErrorHandler = app => {
     app.use(errorHandler)
 };
 
+const filteredGamesValidator = (req, res, next) => {
+
+    const isBodyValid = body => {
+        const keys = Object.keys(body);
+
+        const validKeysCount = keys.length < 3;
+        const allKeysValid = keys.every(item => item === 'home' || item === 'away');
+
+        if(!validKeysCount || !allKeysValid) {
+            return false;
+        }
+
+        const paramNames = keys
+            .reduce((acc, item) => [...acc, ...Object.keys(body[item])],[]);
+
+        const isThereInvalidKey = paramNames.reduce((acc, key) => {
+            if (acc) return true;
+            return !Object.keys(statColumnNames).some(columnName => columnName === key);
+        }, false);
+
+       return !isThereInvalidKey;
+
+    };
+
+    if(!isBodyValid(req.body)) {
+        const error = new Error('Body is not valid');
+        res.status(400);
+        next(error);
+    }
+    next();
+};
+
 module.exports = {
     configMiddlewares,
     configErrorHandler,
+    filteredGamesValidator,
 };
