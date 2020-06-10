@@ -20,13 +20,11 @@ const createQueryParams = (body) => {
 };
 
 const getFilteredGames = async (req, res, next) => {
-    console.log('filter');
-
     const params = createQueryParams(req.body);
-    console.log('p', params);
     try {
         const games = await getFilteredGamesFromDB(params);
-        res.status(200).json({ games, length: games.length });
+        console.log('games', games.length);
+        res.status(200).json({ length: games.length, games  });
     } catch (e) {
         const error = new Error(e.message);
         res.status(400);

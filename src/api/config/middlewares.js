@@ -65,8 +65,28 @@ const filteredGamesValidator = (req, res, next) => {
     next();
 };
 
+const statForTeamValidator = (req, res, next) => {
+    const teamID = req.params.teamID;
+    const state = req.params.state;
+
+    if(state !== 'away' && state !== 'home') {
+        const error = new Error(`You have to add 'home' or 'away' param`);
+        res.status(400);
+        next(error);
+    }
+
+    if(Number.isNaN(Number(teamID))) {
+        const error = new Error(`You have to add a valid number`);
+        res.status(400);
+        next(error);
+    }
+
+    next();
+};
+
 module.exports = {
     configMiddlewares,
     configErrorHandler,
     filteredGamesValidator,
+    statForTeamValidator,
 };

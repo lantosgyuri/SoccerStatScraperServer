@@ -49,7 +49,7 @@ const getGameHashFromDB = createGameHashQuery('hash');
 const getLatestStat = (statTable) => db(statTable).max('id').groupBy('team_id');
 const yesterday = moment().subtract(1, 'day').toISOString();
 
-const baseQuery =  db(`${tableNames.game} AS g`)
+const getBaseQuery = () =>  db(`${tableNames.game} AS g`)
     .join(`${tableNames.league} as l`, 'g.league_id', 'l.id' )
     .join(`${tableNames.team} as t1`, 'g.home_team_id', 't1.id')
     .join(`${tableNames.team} as t2`, 'g.away_team_id', 't2.id')
@@ -78,7 +78,7 @@ const getFilteredGamesFromDB = async (params) => {
     const filters = params.map(item => addParamToFilteredGamesQuery(item));
     const pipe = fns => x => fns.reduce((y, f) => f(y), x);
     const applyAllFilters = pipe(filters);
-    return applyAllFilters(baseQuery);
+    return applyAllFilters(getBaseQuery());
 };
 
 const createBaseStatQuery = dataBase => tableName => async id =>
