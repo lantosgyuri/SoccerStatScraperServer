@@ -1,4 +1,4 @@
-const fs = require('fs');
+const cron = require('node-cron');
 
 const {
     getCurrentlyListedGames,
@@ -18,10 +18,8 @@ const scrape = async () => {
     await openBrowser(false);
     try {
         const currentlyListedGames = await getCurrentlyListedGames();
-        fs.writeFileSync('./newLeagues34.json', JSON.stringify(currentlyListedGames));
         const newRounds = await updateGamesAndLeaguesInDB(currentlyListedGames);
         const newTeamStats = await getTeamStats(newRounds);
-        fs.writeFileSync('./newStats34.json', JSON.stringify(newTeamStats));
         await updateStatsInDB(newTeamStats);
     } catch (e) {
         console.log(e);
@@ -30,7 +28,9 @@ const scrape = async () => {
     await closeBrowser();
 };
 
-//scrape();
+cron.schedule('0 8 * * *', () => {
+    scrape();
+});
 
 const port = process.env.port || 5050;
 app.listen(port, () => {
