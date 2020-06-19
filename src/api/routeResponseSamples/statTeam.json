@@ -1,0 +1,28 @@
+{
+  "teamID": "194",
+  "state": "away",
+  "stats": [
+    {
+      "id": 201,
+      "stat_available": true,
+      "team_id": 194,
+      "avg_goals_for": "0.58",
+      "clean_sheets": "0.42",
+      "won_to_nil": "0.17",
+      "scoring_rate": "0.58",
+      "scored_in_both_halves": "0.00",
+      "team_scored_first": "0.25",
+      "leading_at_halftime": "0.08",
+      "avg_goals_against": "1.08",
+      "failed_to_score": "0.42",
+      "lost_to_nil": "0.17",
+      "conceding_rate": "0.58",
+      "conceded_in_both_halves": "0.08",
+      "opponent_scored_first": "0.50",
+      "losing_at_halftime": "0.25",
+      "created_at": "2020-06-05T09:53:58.483Z",
+      "updated_at": "2020-06-05T09:53:58.483Z",
+      "deleted_at": null
+    }
+  ]
+}

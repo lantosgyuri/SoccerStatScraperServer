@@ -18,12 +18,3 @@ services:
     restart: always
     ports:
       - 8091:8080
-  app:
-    container_name: app
-    restart: always
-    build: .
-    ports:
-      - "8080:5050"
-    depends_on:
-      - db
-    command: ["./wait-for-it.sh", "db:5432", "--", "node", "index.js"]
