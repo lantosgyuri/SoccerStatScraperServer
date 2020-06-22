@@ -1,3 +1,5 @@
+const { statColumnNames } = require('../constants/statColumnNames');
+
 const getLeagueNames = leagueArray => leagueArray.map(item => ({ name: item.leagueName }));
 
 const getTeams = leagueArray => leagueArray.reduce((acc, item) => {
@@ -49,6 +51,9 @@ const getStats = (stats, team) => {
         const stats = item.stats.reduce((acc, itemStat) => {
             const key = Object.keys(itemStat)[0];
             const currentStatName = createNameWithUnderScore(key);
+
+            if (!Object.values(statColumnNames).some(item => item !== currentStatName)) return null;
+
             const currentStat = createNumeric(itemStat[key][teamStatKey]);
             let stat = {};
             stat[currentStatName] = currentStat;

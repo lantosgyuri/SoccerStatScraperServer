@@ -111,7 +111,7 @@ const getGamesOfThisWeek = async (page) => {
             gameList = rawGameList.map(item => Object.assign(item, { leagueName }));
         }
     } catch(e) {
-        throwError('Error in the getGamesOfTheWeek function ')(e);
+        throwError(`Error in the getGamesOfTheWeek function. `)(e);
     }
 
     return { leagueName, gameList } ;
@@ -119,8 +119,8 @@ const getGamesOfThisWeek = async (page) => {
 
 const getStats = async (page) => {
     const LEAGUE_NAME_SELECTOR = '#content > div:nth-child(1) > div:nth-child(1) > table > tbody > tr > td:nth-child(3) > font';
-    const HOME_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(1) > font';
-    const AWAY_TEAM_NAME_SELECTOR = '#content > div:nth-child(8) > div.row > div.seven.columns > table:nth-child(9) > tbody > tr > td:nth-child(2) > font';
+    const HOME_TEAM_NAME_SELECTOR = '#content > div:nth-child(7) > div.row > div.seven.columns > table:nth-child(4) > tbody > tr:nth-child(1) > td:nth-child(1) > h2';
+    const AWAY_TEAM_NAME_SELECTOR = '#content > div:nth-child(7) > div.row > div.seven.columns > table:nth-child(4) > tbody > tr:nth-child(1) > td:nth-child(2) > h2';
     const ROW_SELECTOR = 'div.seven.columns tr[height="22"]';
 
     const namesToScrape = [
@@ -149,23 +149,32 @@ const getStats = async (page) => {
                 .reduce((acc, item) => Object.assign(acc, item))
             , namesToScrape);
 
+    } catch(e) {
+        throwError(`Error in the getStats function with getting the names`)(e);
+    }
+
+    try{
         stats = await page.evaluate(sel=> {
                 const TD_SELECTOR = 'td[valign="middle"]';
                 const allRows = Array.from(document.querySelectorAll(sel));
                 if(allRows && allRows.length > 15) {
-                    const neededRows = allRows.splice(0,14);
+                    const neededRows = allRows.slice(0,14);
                     return neededRows.map(node => {
                         let stat = {};
-                        const data = Array.from(node.querySelectorAll(TD_SELECTOR))
-                            .map(item => item.innerText);
-                        stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
+                        try {
+                           const data = Array.from(node.querySelectorAll(TD_SELECTOR))
+                                .map(item => item.innerText);
+                           stat[data[1]] = { homeStat: data[0], awayStat: data[2]};
+                        } catch (e) {
+                            return null;
+                        }
                         return stat;
                     });
                 }
             }
             , ROW_SELECTOR);
     } catch(e) {
-        throwError('Error in the getStats function ')(e);
+        throwError(`Error in the getStats function with getting the stats`)(e);
     }
 
     return Object.assign(scrapedNames, { stats })
@@ -175,7 +184,7 @@ const loopNScrape = async (scrapeFunction, linkList, browser) => {
     let scrapedDataList = [];
     for (let i = 0; i < linkList.length; i++) {
         const newPage = await browser.newPage();
-        await newPage.goto(linkList[i]);
+        await newPage.goto(linkList[i], {waitUntil: 'networkidle0'});
         const data = await scrapeFunction(newPage);
         await delayExecution();
         scrapedDataList.push(data);

@@ -14,6 +14,7 @@ const {
 
 const app = require('./src/api/app');
 
+// TODO BETTER ERROR HANDLING
 const scrape = async () => {
     await openBrowser(false);
     try {
@@ -28,9 +29,11 @@ const scrape = async () => {
     await closeBrowser();
 };
 
-cron.schedule('0 8 * * *', () => {
-    scrape();
-});
+//cron.schedule('0 8 * * *', () => {
+ //   scrape();
+//});
+
+scrape();
 
 const port = process.env.port || 5050;
 app.listen(port, () => {
