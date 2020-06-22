@@ -52,7 +52,7 @@ const getStats = (stats, team) => {
             const key = Object.keys(itemStat)[0];
             const currentStatName = createNameWithUnderScore(key);
 
-            if (!Object.values(statColumnNames).some(item => item !== currentStatName)) return null;
+            if (!Object.values(statColumnNames).some(item => item !== currentStatName)) return acc;
 
             const currentStat = createNumeric(itemStat[key][teamStatKey]);
             let stat = {};

@@ -16,7 +16,7 @@ const app = require('./src/api/app');
 
 // TODO BETTER ERROR HANDLING
 const scrape = async () => {
-    await openBrowser(false);
+    await openBrowser(true);
     try {
         const currentlyListedGames = await getCurrentlyListedGames();
         const newRounds = await updateGamesAndLeaguesInDB(currentlyListedGames);
