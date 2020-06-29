@@ -1,4 +1,5 @@
-const { getHomeTeamStatFromDB, getAwayTeamStatFromDB } =require('../../../dbService/utils/dbOperations');
+const { getHomeTeamStatFromDB, getAwayTeamStatFromDB } = require('../../../dbService/utils/dbOperations');
+const { statFieldInfo } = require('../../../dbService/constants/statColumnNames')
 
 const getStatForTeam = async (req, res, next) => {
     const teamID = req.params.teamID;
@@ -15,6 +16,11 @@ const getStatForTeam = async (req, res, next) => {
     }
 };
 
+const getAvailableStatFields = (req, res) => {
+        res.status(200).json(statFieldInfo) ;
+}
+
 module.exports = {
     getStatForTeam,
+    getAvailableStatFields,
 };

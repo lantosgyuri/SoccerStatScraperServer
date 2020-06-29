@@ -29,4 +29,6 @@ services:
       - db
     environment:
       - DB_HOST=db
-    command: ["./wait-for-it.sh", "db:5432", "--", "node", "index.js"]
+    volumes:
+      - .:/usr/app
+    command: ["./wait-for-it.sh", "db:5432", "--", "npm", "run", "nodemon" ]

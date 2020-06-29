@@ -15,6 +15,31 @@ const statColumnNames = {
     losing_at_halftime: 'losing_at_halftime',
 };
 
+const statFieldInfo = {
+   types : {
+       num: {
+           minValue: 0,
+           maxValue: 10,
+       },
+       percentage: {
+           minValue: 0,
+           maxValue: 1,
+       }
+   },
+    fields: [
+            {
+                name: 'Average goals for',
+                dbColumnName: 'avg_goals_for',
+                type: 'num',
+            },
+            {
+                name: 'Clean sheets',
+                dbColumnName: 'clean_sheets',
+                type: 'percentage',
+            },
+   ]
+};
+
 const addTeamPrefix = (preFix, nameObj) => Object.entries(nameObj)
     .reduce((acc, item) => {
         const currentKey = item[0];
@@ -27,4 +52,5 @@ module.exports = {
     statNameHome: addTeamPrefix('hst', statColumnNames),
     statNameAway: addTeamPrefix('ast', statColumnNames),
     statColumnNames,
+    statFieldInfo,
 };
