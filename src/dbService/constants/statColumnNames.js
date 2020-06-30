@@ -27,16 +27,76 @@ const statFieldInfo = {
        }
    },
     fields: [
-            {
-                name: 'Average goals for',
-                dbColumnName: 'avg_goals_for',
-                type: 'num',
-            },
-            {
-                name: 'Clean sheets',
-                dbColumnName: 'clean_sheets',
-                type: 'percentage',
-            },
+        {
+            name: 'Average goals for',
+            dbColumnName: 'avg_goals_for',
+            type: 'num',
+        },
+        {
+            name: 'Clean sheets',
+            dbColumnName: 'clean_sheets',
+            type: 'percentage',
+        },
+        {
+            name: 'Won to nil',
+            dbColumnName: 'won_to_nil',
+            type: 'percentage',
+        },
+        {
+            name: 'Scoring rate',
+            dbColumnName: 'scoring_rate',
+            type: 'percentage',
+        },
+        {
+            name: 'Scored in both halves',
+            dbColumnName: 'scored_in_both_halves',
+            type: 'percentage',
+        },
+        {
+            name: 'Team scored first',
+            dbColumnName: 'team_scored_first',
+            type: 'percentage',
+        },
+        {
+            name: 'Leading at halftime',
+            dbColumnName: 'leading_at_halftime',
+            type: 'percentage',
+        },
+        {
+            name: 'Average goals against',
+            dbColumnName: 'avg_goals_against',
+            type: 'num',
+        },
+        {
+            name: 'Failed to score',
+            dbColumnName: 'failed_to_score',
+            type: 'percentage',
+        },
+        {
+            name: 'Lost to nil',
+            dbColumnName: 'lost_to_nil',
+            type: 'percentage',
+        },
+        {
+            name: 'Conceding rate',
+            dbColumnName: 'conceding_rate',
+            type: 'percentage',
+        },
+        {
+            name: 'Conceded in both halves',
+            dbColumnName: 'conceded_in_both_halves',
+            type: 'percentage',
+        },
+        {
+            name: 'Opponent scored first',
+            dbColumnName: 'opponent_scored_first',
+            type: 'percentage',
+        },
+        {
+            name: 'Losing at halftime',
+            dbColumnName: 'losing_at_halftime',
+            type: 'percentage',
+        },
    ]
 };
 
