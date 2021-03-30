@@ -1,10 +1,10 @@
 # SoccerStatScraperServer
 
-This is a simple server for scraping soccerstats.com. 
+This is a simple server for scraping soccerstats.com. The data will be saved in a SQL database and exposed through REST endpoints. 
 
 ## Run
 
-Just run the docker-compose file. 
+Run the docker-compose file, and spin up the server.
 
 ## API routes
 
