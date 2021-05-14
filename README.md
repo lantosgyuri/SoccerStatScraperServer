@@ -13,6 +13,7 @@ Run the docker-compose file, and spin up the server.
 You can filter games by the statistics. The API will search for games where the params are bigger as the params set in the body.
 
 Body: 
+```json
 "home" : {
   "avg_goals_for": "0.4",
 	"clean_sheets": "0.2",
@@ -22,6 +23,8 @@ Body:
 	"failed_to_score": "0.3",
 }
 
+```
+
 **GET api/v1/stat/team/:teamID/:state**
 
 State must be "home" or "away".
@@ -29,4 +32,4 @@ Returns the team statistic of a team, based on Home or Away games.
 
 **GET api/v1/stat/available-field**
 
-Returns all of the available fields which you can use in the *api/v1/games/filter* route.
+Returns all of the available fields which you can use in the `api/v1/games/filter` route.
